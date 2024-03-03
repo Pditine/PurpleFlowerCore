@@ -2,7 +2,7 @@
 using UnityEngine;
 namespace PurpleFlowerCore.Editor
 {
-    public class PFCMenuWindow
+    public static class PFCMenu
     {
         [MenuItem("PFC/打开存档路径")]
         public static void OpenArchivedDirPath()

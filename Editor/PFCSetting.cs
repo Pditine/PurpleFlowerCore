@@ -1,13 +1,15 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace PurpleFlowerCore.Editor
 {
-    [CreateAssetMenu(fileName = "PFCSetting",menuName = "PFC/PFCSetting")]
+    //[CreateAssetMenu(fileName = "PFCSetting",menuName = "PFC/PFCSetting")]
+    [Obsolete("暂时不使用",false)]
     public class PFCSetting : ScriptableObject
     {
-        [Header("数据持久化方式")] public SaveState saveState;
-        [Header("资源管理方式")] public ResourceState resourceState;
+        // [Header("数据持久化方式")] public SaveState saveState;
+        // [Header("资源管理方式")] public ResourceState resourceState;
         
         /// <summary>
         /// 增加预处理指令
@@ -34,15 +36,5 @@ namespace PurpleFlowerCore.Editor
                 UnityEditor.PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, group.Replace(";" + name, string.Empty));
             }
         }
-    }
-
-    public enum SaveState
-    {
-        Json,LitJson,Binary
-    }
-
-    public enum ResourceState
-    {
-        Resources,AssetBundle
     }
 }

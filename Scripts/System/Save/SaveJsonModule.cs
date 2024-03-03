@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace PurpleFlowerCore.Save
 {
+#if PFC_SAVE_JSON
     public class SaveJsonModule
     {
         public void Save(string fileName, object data)
@@ -41,4 +42,5 @@ namespace PurpleFlowerCore.Save
             return File.Exists(GetPath(fileName));
         }
     }
+#endif
 }
