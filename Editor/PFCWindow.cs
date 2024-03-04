@@ -3,26 +3,17 @@ using UnityEngine;
 
 namespace PurpleFlowerCore.Editor
 {
-    [InitializeOnLoad]
     public class PFCWindow : EditorWindow
     {
         private SaveMode _saveMode;
         private bool _logInfo;
         private bool _logWarning;
         private bool _logError;
-        private static bool _hasInit;
-        static PFCWindow()
-        {
-            if(PFCSetting.Instance.LogInfo)AddScriptCompilationSymbol("PFC_LOG_INFO");
-            if(PFCSetting.Instance.LogWarning)AddScriptCompilationSymbol("PFC_LOG_WARNING");
-            if(PFCSetting.Instance.LogError)AddScriptCompilationSymbol("PFC_LOG_ERROR");
-            AddScriptCompilationSymbol("PFC_SAVE_"+PFCSetting.Instance.SaveMode.ToString().ToUpper());
-        }
         
         [MenuItem("PFC/打开设置菜单")]
         private static void OpenWindow()
         {
-            var win = GetWindow<EditorWindow>("Purple Flower Core");
+            var win = GetWindow<PFCWindow>("Purple Flower Core");
             win.Show();
             win.maxSize = new Vector2(800, 600);
             win.minSize = win.maxSize;
@@ -43,7 +34,7 @@ namespace PurpleFlowerCore.Editor
 
         private void OnGUI()
         {
-            GUI.DrawTexture(new Rect(600,400,200,200),ResourceSystem.LoadResource<Texture>("logo-a0"));
+            GUI.DrawTexture(new Rect(600,400,200,200),Resources.Load<Texture>("PFCRes/logo-a0"));
             EditorGUILayout.LabelField("欢迎使用PurpleFlowerCore，这是我为了更好的个性化而制作的程序框架和工具集合\n当前处于早期开发版", GUILayout.Height(50));
             _saveMode = (SaveMode)EditorGUILayout.EnumPopup("数据持久化方式", _saveMode);
             _logInfo = EditorGUILayout.Toggle("使用LogInfo", _logInfo);

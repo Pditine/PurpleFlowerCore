@@ -58,15 +58,6 @@ namespace PurpleFlowerCore.Pool
             if (_data.ContainsKey(theGameObjectName)) return true;
             PFCLog.Error("请提供有物体为参数的对象池数据初始化:"+theGameObjectName);
             return false;
-            // var root = new GameObject(theGameObjectName+"Pool")
-            // {
-            //     transform =
-            //     {
-            //         parent = gameObject.transform
-            //     }
-            // };
-            //todo:查找资源,希望使用某种资源管理方式自动提供物体
-            //_data.Add(theGameObjectName,new GameObjectPoolData(root.transform,theGameObjectName));
         }
     }
 }

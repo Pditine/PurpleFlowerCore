@@ -20,10 +20,7 @@ namespace PurpleFlowerCore
                 {
                     transform = { parent = PFCManager.Instance.transform }
                 };
-                //todo:通过某种资源管理方式查找物体
-                var processGameObject = new GameObject("process");
-                processGameObject.AddComponent<Process>();
-                _pool = new GameObjectPoolData(root.transform,processGameObject);
+                _pool = new GameObjectPoolData(root.transform,Resources.Load<GameObject>("PFCRes/Process"));
                 _pool.Init();
                 return _pool;
             }
