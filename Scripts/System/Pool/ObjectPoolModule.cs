@@ -25,25 +25,25 @@ namespace PurpleFlowerCore.Pool
         
         public T GetObject<T>() where T: class
         {
-            InitObjectPoolData<T>();
+            CheckObjectPoolData<T>();
             return _data[typeof(T).FullName].Pop() as T;
         }
         
         public object GetObject(Type type)
         {
-            InitObjectPoolData(type);
+            CheckObjectPoolData(type);
             return _data[type.FullName].Pop();
         }
         
-        public void PushGameObject<T>(T theObject)
+        public void PushObject<T>(T theObject)
         {
-            InitObjectPoolData<T>();
+            CheckObjectPoolData<T>();
             _data[typeof(T).FullName].Push(theObject);
         }
         
-        public void PushGameObject(Type type,object theObject)
+        public void PushObject(Type type,object theObject)
         {
-            InitObjectPoolData(type);
+            CheckObjectPoolData(type);
             _data[type.FullName].Push(theObject);
         }
         
@@ -51,7 +51,7 @@ namespace PurpleFlowerCore.Pool
         {
             string objectName = typeof(T).FullName;
             if (_data.ContainsKey(objectName)) return;
-            _data.Add(objectName,new ObjectPoolData(typeof(T)));
+            _data.Add(objectName,new ObjectPoolData());
             _data[objectName].Init();
         }
 
@@ -59,7 +59,7 @@ namespace PurpleFlowerCore.Pool
         {
             string objectName = type.FullName;
             if (_data.ContainsKey(objectName)) return;
-            _data.Add(objectName,new ObjectPoolData(type));
+            _data.Add(objectName,new ObjectPoolData());
             _data[objectName].Init();
         }
         

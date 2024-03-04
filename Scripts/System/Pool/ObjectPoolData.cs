@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
+
 //using Unity.VisualScripting;
 
 namespace PurpleFlowerCore.Pool
 {
     public class ObjectPoolData
     {
-        private readonly Type _type;
+        //private readonly Type _type;
         private readonly Queue<object> _objects = new();
         private int _maxCount;
         //private bool _infinitePop;
-        public ObjectPoolData(Type type)
-        {
-            _type = type;
-
-        }
+        // public ObjectPoolData(Type type)
+        // {
+        //     _type = type;
+        // }
 
         //public void Init(int maxCount = -1,bool infinitePop = true,bool fillWhenInit = true)
         public void Init(int maxCount = -1)
         {
             _maxCount = maxCount;
+            Debug.Log(_maxCount);
             //_infinitePop = infinitePop;
             // if (fillWhenInit)
             // {
@@ -39,7 +41,6 @@ namespace PurpleFlowerCore.Pool
                 // if (!_infinitePop) return null;
                 // theObject = _type.Instantiate();
                 // return theObject;
-
                 return null;
             }
             theObject = _objects.Dequeue();

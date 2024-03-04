@@ -64,13 +64,13 @@ namespace PurpleFlowerCore
 
         #region ObjectPool
 
-        public static void InitObjectPoolData<T>(int maxCount = -1, bool infinitePop = true, bool fillWhenInit = false)
+        public static void InitObjectPoolData<T>(int maxCount = -1)
         {
             //ObjectPoolModule.InitObjectPoolData<T>(maxCount,infinitePop,fillWhenInit);
             ObjectPoolModule.InitObjectPoolData<T>(maxCount);
         }
         
-        public static void InitObjectPoolData(Type type, int maxCount = -1, bool infinitePop = true, bool fillWhenInit = false)
+        public static void InitObjectPoolData(Type type, int maxCount = -1)
         {
             //ObjectPoolModule.InitObjectPoolData(type,maxCount,infinitePop,fillWhenInit);
             ObjectPoolModule.InitObjectPoolData(type,maxCount);
@@ -86,14 +86,14 @@ namespace PurpleFlowerCore
             return ObjectPoolModule.GetObject(type);
         }
         
-        public static void PushGameObject<T>(T theObject)
+        public static void PushObject<T>(T theObject)
         {
-            ObjectPoolModule.PushGameObject<T>(theObject);
+            ObjectPoolModule.PushObject<T>(theObject);
         }
         
-        public static void PushGameObject(Type type,object theObject)
+        public static void PushObject(Type type,object theObject)
         {
-            ObjectPoolModule.PushGameObject(type,theObject);
+            ObjectPoolModule.PushObject(type,theObject);
         }
 
         #endregion
