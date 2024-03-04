@@ -3,23 +3,37 @@ using UnityEngine;
 
 namespace PurpleFlowerCore.Editor
 {
+    [InitializeOnLoad]
     public class PFCWindow : EditorWindow
     {
         private SaveMode _saveMode;
         private bool _logInfo;
         private bool _logWarning;
         private bool _logError;
-
+        private static bool _hasInit;
+        static PFCWindow()
+        {
+            if(PFCSetting.Instance.LogInfo)AddScriptCompilationSymbol("PFC_LOG_INFO");
+            if(PFCSetting.Instance.LogWarning)AddScriptCompilationSymbol("PFC_LOG_WARNING");
+            if(PFCSetting.Instance.LogError)AddScriptCompilationSymbol("PFC_LOG_ERROR");
+            AddScriptCompilationSymbol("PFC_SAVE_"+PFCSetting.Instance.SaveMode.ToString().ToUpper());
+        }
+        
         [MenuItem("PFC/打开设置菜单")]
         private static void OpenWindow()
         {
-            EditorWindow win = GetWindow<PFCWindow>("Purple Flower Core");
+            var win = GetWindow<EditorWindow>("Purple Flower Core");
             win.Show();
             win.maxSize = new Vector2(800, 600);
-            win.maximized = true;
+            win.minSize = win.maxSize;
+        }
+        
+        private void OnEnable()
+        {
+            Init();
         }
 
-        private void OnEnable()
+        private void Init()
         {
             _saveMode = PFCSetting.Instance.SaveMode;
             _logInfo = PFCSetting.Instance.LogInfo;
@@ -36,13 +50,16 @@ namespace PurpleFlowerCore.Editor
             _logWarning = EditorGUILayout.Toggle("使用LogWarning", _logWarning);
             _logError = EditorGUILayout.Toggle("使用LogError", _logError);
             if (GUILayout.Button("应用"))
-            {
-                ChangeSaveMode();
-                ChangeLogMode();
-                PFCSetting.ReSet();
-            }
+                Apply();
         }
 
+        public void Apply()
+        {
+            ChangeSaveMode();
+            ChangeLogMode();
+            PFCSetting.ReSet();
+        }
+        
         private void ChangeSaveMode()
         {
             RemoveScriptCompilationSymbol("PFC_SAVE_" + PFCSetting.Instance.SaveMode.ToString().ToUpper());
@@ -62,30 +79,30 @@ namespace PurpleFlowerCore.Editor
             PFCSetting.Instance.LogWarning = _logWarning;
             PFCSetting.Instance.LogError = _logError;
         }
-
+        
         /// <summary>
         /// 增加预处理指令
         /// </summary>
-        private static void AddScriptCompilationSymbol(string name)
+        private static void AddScriptCompilationSymbol(string symbolName)
         {
             BuildTargetGroup buildTargetGroup = UnityEditor.EditorUserBuildSettings.selectedBuildTargetGroup;
             string group = UnityEditor.PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
-            if (!group.Contains(name))
+            if (!group.Contains(symbolName))
             {
-                UnityEditor.PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, group + ";" + name);
+                UnityEditor.PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, group + ";" + symbolName);
             }
         }
 
         /// <summary>
         /// 移除预处理指令
         /// </summary>
-        private static void RemoveScriptCompilationSymbol(string name)
+        private static void RemoveScriptCompilationSymbol(string symbolName)
         {
             BuildTargetGroup buildTargetGroup = UnityEditor.EditorUserBuildSettings.selectedBuildTargetGroup;
             string group = UnityEditor.PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
-            if (group.Contains(name))
+            if (group.Contains(symbolName))
             {
-                UnityEditor.PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, group.Replace(";" + name, string.Empty));
+                UnityEditor.PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, group.Replace(";" + symbolName, string.Empty));
             }
         }
     }
