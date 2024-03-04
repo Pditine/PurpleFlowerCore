@@ -1,4 +1,6 @@
-﻿namespace PurpleFlowerCore
+﻿using UnityEngine.Events;
+
+namespace PurpleFlowerCore
 {
     public interface IProcessNode
     {

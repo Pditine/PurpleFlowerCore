@@ -5,7 +5,6 @@ namespace PurpleFlowerCore
 {
     public static class SaveSystem
     {
-        //todo:使用某种方式更改存档方式
 #if PFC_SAVE_JSON
         private static SaveJsonModule _saveJsonModule;
         private static SaveJsonModule SaveJsonModule

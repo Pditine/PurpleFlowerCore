@@ -1,15 +1,16 @@
-﻿using System;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace PurpleFlowerCore.Editor
 {
-    public class PFCWindow: EditorWindow
+    public class PFCWindow : EditorWindow
     {
         private SaveMode _saveMode;
-        private SaveMode _newSaveMode;
-        
-        [MenuItem("PFC/打开菜单")]
+        private bool _logInfo;
+        private bool _logWarning;
+        private bool _logError;
+
+        [MenuItem("PFC/打开设置菜单")]
         private static void OpenWindow()
         {
             EditorWindow win = GetWindow<PFCWindow>("Purple Flower Core");
@@ -20,27 +21,47 @@ namespace PurpleFlowerCore.Editor
 
         private void OnEnable()
         {
-            _newSaveMode = _saveMode;
+            _saveMode = PFCSetting.Instance.SaveMode;
+            _logInfo = PFCSetting.Instance.LogInfo;
+            _logWarning = PFCSetting.Instance.LogWarning;
+            _logError = PFCSetting.Instance.LogError;
         }
 
         private void OnGUI()
         {
-            EditorGUILayout.LabelField("欢迎使用PurpleFlowerCore，这是我为了更好的个性化而制作的程序框架和工具集合",GUILayout.Height(100));
-            _newSaveMode = (SaveMode)EditorGUILayout.EnumPopup(_newSaveMode);
+            EditorGUILayout.LabelField("欢迎使用PurpleFlowerCore，这是我为了更好的个性化而制作的程序框架和工具集合", GUILayout.Height(100));
+            _saveMode = (SaveMode)EditorGUILayout.EnumPopup("数据持久化方式", _saveMode);
+            _logInfo = EditorGUILayout.Toggle("使用LogInfo", _logInfo);
+            _logWarning = EditorGUILayout.Toggle("使用LogWarning", _logWarning);
+            _logError = EditorGUILayout.Toggle("使用LogError", _logError);
             if (GUILayout.Button("应用"))
             {
-                ChangeSaveState();
+                ChangeSaveMode();
+                ChangeLogMode();
+                PFCSetting.ReSet();
             }
-            
         }
 
-        private void ChangeSaveState()
+        private void ChangeSaveMode()
         {
-            RemoveScriptCompilationSymbol("PFC_SAVE_" + _saveMode.ToString().ToUpper());
-            _saveMode = _newSaveMode;
+            RemoveScriptCompilationSymbol("PFC_SAVE_" + PFCSetting.Instance.SaveMode.ToString().ToUpper());
+            PFCSetting.Instance.SaveMode = _saveMode;
             AddScriptCompilationSymbol("PFC_SAVE_" + _saveMode.ToString().ToUpper());
         }
-        
+
+        private void ChangeLogMode()
+        {
+            if(_logInfo)AddScriptCompilationSymbol("PFC_LOG_INFO");
+            else RemoveScriptCompilationSymbol("PFC_LOG_INFO");
+            if(_logWarning)AddScriptCompilationSymbol("PFC_LOG_WARNING");
+            else RemoveScriptCompilationSymbol("PFC_LOG_WARNING");
+            if(_logError)AddScriptCompilationSymbol("PFC_LOG_ERROR");
+            else RemoveScriptCompilationSymbol("PFC_LOG_ERROR");
+            PFCSetting.Instance.LogInfo = _logInfo;
+            PFCSetting.Instance.LogWarning = _logWarning;
+            PFCSetting.Instance.LogError = _logError;
+        }
+
         /// <summary>
         /// 增加预处理指令
         /// </summary>
@@ -67,14 +88,5 @@ namespace PurpleFlowerCore.Editor
             }
         }
     }
-    
-    public enum SaveMode
-    {
-        Json,LitJson,Binary
-    }
 
-    public enum ResourceMode
-    {
-        Resources,AssetBundle
-    }
 }

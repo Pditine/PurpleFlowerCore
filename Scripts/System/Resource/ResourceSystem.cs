@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using Object = UnityEngine.Object;
 
-namespace PurpleFlowerCore.Resource
+namespace PurpleFlowerCore
 {
     public static class ResourceSystem
     {
         #region Resources
 
+#if PFC_RES_RESOURCES
         public static Object LoadResource(string path)
         {
             return Resources.Load(path);
@@ -60,11 +61,12 @@ namespace PurpleFlowerCore.Resource
             yield return res;
             callBack?.Invoke(res.asset as T);
         }
-
+#endif
         #endregion
 
         #region AssetBundle
 
+#if PFC_RES_AB
         private static AssetBundleModule _assetBundleModule;
 
         private static AssetBundleModule AssetBundleModule
@@ -121,7 +123,7 @@ namespace PurpleFlowerCore.Resource
         {
             AssetBundleModule.LoadResourceAsync(abName,resName,type,callBack);
         }
-        
+#endif
         #endregion
 
     }

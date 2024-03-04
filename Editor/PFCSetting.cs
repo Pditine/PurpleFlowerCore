@@ -1,40 +1,60 @@
-﻿using System;
+﻿using System.IO;
 using UnityEditor;
 using UnityEngine;
 
 namespace PurpleFlowerCore.Editor
 {
-    //[CreateAssetMenu(fileName = "PFCSetting",menuName = "PFC/PFCSetting")]
-    [Obsolete("暂时不使用",false)]
-    public class PFCSetting : ScriptableObject
+    public class PFCSetting
     {
-        // [Header("数据持久化方式")] public SaveState saveState;
-        // [Header("资源管理方式")] public ResourceState resourceState;
-        
-        /// <summary>
-        /// 增加预处理指令
-        /// </summary>
-        private static void AddScriptCompilationSymbol(string name)
+        private static PFCSetting _instance;
+        public static PFCSetting Instance
         {
-            BuildTargetGroup buildTargetGroup = UnityEditor.EditorUserBuildSettings.selectedBuildTargetGroup;
-            string group = UnityEditor.PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
-            if (!group.Contains(name))
+            get
             {
-                UnityEditor.PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, group + ";" + name);
+                if (_instance is not null) return _instance;
+                if (!File.Exists(Path + "setting.json"))ReSet(); 
+                var jsonStr = File.ReadAllText(Path+"setting.json");
+                _instance = JsonUtility.FromJson<PFCSetting>(jsonStr);
+                AssetDatabase.Refresh();
+                return _instance;
             }
+        }
+        private static string Path => Application.dataPath + "/PurpleFlowerCore/Editor/Setting/";
+        
+        public SaveMode SaveMode;
+        //public ResourceMode ResourceMode;
+        public bool LogInfo;
+        public bool LogWarning;
+        public bool LogError;
+
+        public static void ReSet()
+        {
+            var jsonStr = JsonUtility.ToJson(_instance);
+            File.WriteAllText(Path+"setting.json", jsonStr);
         }
 
-        /// <summary>
-        /// 移除预处理指令
-        /// </summary>
-        private static void RemoveScriptCompilationSymbol(string name)
-        {
-            BuildTargetGroup buildTargetGroup = UnityEditor.EditorUserBuildSettings.selectedBuildTargetGroup;
-            string group = UnityEditor.PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
-            if (group.Contains(name))
-            {
-                UnityEditor.PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, group.Replace(";" + name, string.Empty));
-            }
-        }
+        // [MenuItem("PFC/创建默认json文件")]
+        // private static void CreateDefaultSettingJson() // 仅开发中使用
+        // {
+        //     var defaultSettingJson = new PFCSetting();
+        //     defaultSettingJson.SaveMode = SaveMode.Json;
+        //     defaultSettingJson.LogInfo = false;
+        //     defaultSettingJson.LogWarning = false;
+        //     defaultSettingJson.LogError = false;
+        //     var jsonStr = JsonUtility.ToJson(defaultSettingJson);
+        //     File.WriteAllText(Path+"setting.json", jsonStr);
+        //     AssetDatabase.Refresh();
+        // }
+        
+    }
+    
+    public enum SaveMode
+    {
+        Json,LitJson,Binary
+    }
+
+    public enum ResourceMode
+    {
+        Resources,AssetBundle
     }
 }
