@@ -29,7 +29,8 @@ namespace PurpleFlowerCore.Editor
 
         private void OnGUI()
         {
-            EditorGUILayout.LabelField("欢迎使用PurpleFlowerCore，这是我为了更好的个性化而制作的程序框架和工具集合", GUILayout.Height(100));
+            GUI.DrawTexture(new Rect(600,400,200,200),ResourceSystem.LoadResource<Texture>("logo-a0"));
+            EditorGUILayout.LabelField("欢迎使用PurpleFlowerCore，这是我为了更好的个性化而制作的程序框架和工具集合\n当前处于早期开发版", GUILayout.Height(50));
             _saveMode = (SaveMode)EditorGUILayout.EnumPopup("数据持久化方式", _saveMode);
             _logInfo = EditorGUILayout.Toggle("使用LogInfo", _logInfo);
             _logWarning = EditorGUILayout.Toggle("使用LogWarning", _logWarning);

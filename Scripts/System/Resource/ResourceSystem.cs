@@ -10,7 +10,7 @@ namespace PurpleFlowerCore
     {
         #region Resources
 
-#if PFC_RES_RESOURCES
+//#if PFC_RES_RESOURCES
         public static Object LoadResource(string path)
         {
             return Resources.Load(path);
@@ -61,7 +61,7 @@ namespace PurpleFlowerCore
             yield return res;
             callBack?.Invoke(res.asset as T);
         }
-#endif
+//#endif
         #endregion
 
         #region AssetBundle
