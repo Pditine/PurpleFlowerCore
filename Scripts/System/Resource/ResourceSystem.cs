@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using PurpleFlowerCore.Resource;
 using Object = UnityEngine.Object;
 
 namespace PurpleFlowerCore
@@ -50,12 +51,12 @@ namespace PurpleFlowerCore
             callBack?.Invoke(res.asset);
         }
 
-        public static void LoadAsync<T>(string path, UnityAction<T> callBack) where T : Object
+        public static void LoadResourceAsync<T>(string path, UnityAction<T> callBack) where T : Object
         {
-            MonoSystem.Start_Coroutine(DoLoadAsync<T>(path, callBack));
+            MonoSystem.Start_Coroutine(DoLoadResourceAsync<T>(path, callBack));
         }
 
-        private static IEnumerator DoLoadAsync<T>(string path, UnityAction<T> callBack) where T: Object
+        private static IEnumerator DoLoadResourceAsync<T>(string path, UnityAction<T> callBack) where T: Object
         {
             var res = Resources.LoadAsync<T>(path);
             yield return res;
@@ -66,7 +67,7 @@ namespace PurpleFlowerCore
 
         #region AssetBundle
 
-#if PFC_RES_AB
+//#if PFC_RES_AB
         private static AssetBundleModule _assetBundleModule;
 
         private static AssetBundleModule AssetBundleModule
@@ -94,36 +95,36 @@ namespace PurpleFlowerCore
             AssetBundleModule.ClearAssetBundle();
         }
         
-        public static T LoadResource<T>(string abName, string resName) where T : Object
+        public static T LoadABResource<T>(string abName, string resName) where T : Object
         {
             return AssetBundleModule.LoadResource<T>(abName, resName);
         }
 
-        public static object LoadResource(string abName, string resName,System.Type type)
+        public static object LoadABResource(string abName, string resName,System.Type type)
         {
             return AssetBundleModule.LoadResource(abName, resName, type);
         }
         
-        public static object LoadResource(string abName, string resName)
+        public static object LoadABResource(string abName, string resName)
         {
             return AssetBundleModule.LoadResource(abName, resName);
         }
 
-        public static void LoadResourceAsync<T>(string abName, string resName,UnityAction<T> callBack) where T: Object
+        public static void LoadABResourceAsync<T>(string abName, string resName,UnityAction<T> callBack) where T: Object
         {
            AssetBundleModule.LoadResourceAsync<T>(abName,resName,callBack);
         }
         
-        public static void LoadResourceAsync(string abName, string resName,UnityAction<Object> callBack)
+        public static void LoadABResourceAsync(string abName, string resName,UnityAction<Object> callBack)
         {
             AssetBundleModule.LoadResourceAsync(abName,resName,callBack);
         }
         
-        public static void LoadResourceAsync(string abName, string resName,System.Type type,UnityAction<Object> callBack)
+        public static void LoadABResourceAsync(string abName, string resName,System.Type type,UnityAction<Object> callBack)
         {
             AssetBundleModule.LoadResourceAsync(abName,resName,type,callBack);
         }
-#endif
+//#endif
         #endregion
 
     }

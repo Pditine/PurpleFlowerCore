@@ -1,10 +1,10 @@
 ﻿namespace PurpleFlowerCore
 {
-    public class WaitForSecond: IProcessNode
+    public class WaitNode: IProcessNode
     {
         private readonly float _waitTime;
         private float _currentTime;
-        public WaitForSecond(float time)
+        public WaitNode(float time)
         {
             _waitTime = time;
         }
@@ -19,9 +19,9 @@
             _currentTime = 0;
         }
 
-        public static implicit operator WaitForSecond(float time)
+        public static implicit operator WaitNode(float time)
         {
-            return new WaitForSecond(time);
+            return new WaitNode(time);
         }
     }
 }

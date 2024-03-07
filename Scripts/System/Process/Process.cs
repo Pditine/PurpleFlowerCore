@@ -35,6 +35,11 @@ namespace PurpleFlowerCore
             _isPause = true;
         }
 
+        public void UnPause()
+        {
+            _isPause = false;
+        }
+
         public Process Add(IProcessNode node)
         {
             _nodes.Add(node);
@@ -59,15 +64,17 @@ namespace PurpleFlowerCore
         private void Update()
         {
             if (_isPause) return;
-            if (_nodes[_currentNodeIndex].Update(Time.deltaTime))
+            if(_currentNodeIndex>=_nodes.Count)
             {
-                _currentNodeIndex++;
-                if(_currentNodeIndex>=_nodes.Count)
-                    if(_loop)
-                        Start_();
-                    else
-                        Pause();
+                if (_loop)
+                    Start_();
+                else
+                    Pause();
+                return;
             }
+            if (_nodes[_currentNodeIndex].Update(Time.deltaTime))
+                _currentNodeIndex++;
+            
         }
     }
 }

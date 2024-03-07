@@ -35,66 +35,53 @@ namespace PurpleFlowerCore
 
         #region GameObjectPool
 
-        public static void InitGameObjectPoolData(GameObject theGameObject,int maxCount = -1, bool infinitePop = true, bool fillWhenInit = false)
-        {
-            GameObjectPoolModule.InitGameObjectPoolData(theGameObject,maxCount,infinitePop,fillWhenInit);
-        }
+        public static void InitGameObjectPool(GameObject theGameObject,int maxCount = -1, bool infinitePop = true, bool fillWhenInit = false)
+            =>GameObjectPoolModule.InitGameObjectPoolData(theGameObject,maxCount,infinitePop,fillWhenInit);
         
-        public static void InitGameObjectPoolData(string theGameObjectName,int maxCount = -1, bool infinitePop = true, bool fillWhenInit = false)
-        {
-            GameObjectPoolModule.InitGameObjectPoolData(theGameObjectName,maxCount,infinitePop,fillWhenInit);
-        }
+        
+        public static void InitGameObjectPool(string theGameObjectName,int maxCount = -1, bool infinitePop = true, bool fillWhenInit = false) 
+            => GameObjectPoolModule.InitGameObjectPoolData(theGameObjectName,maxCount,infinitePop,fillWhenInit);
+        
         
         public static GameObject GetGameObject(GameObject theGameObject)
-        {
-            return GameObjectPoolModule.GetGameObject(theGameObject);
-        }
+            => GameObjectPoolModule.GetGameObject(theGameObject);
+        
         
         public static GameObject GetGameObject(string theGameObjectName)
-        {
-            return GameObjectPoolModule.GetGameObject(theGameObjectName);
-        }
+            => GameObjectPoolModule.GetGameObject(theGameObjectName);
+        
         
         public static void PushGameObject(GameObject theGameObject)
-        {
-            GameObjectPoolModule.PushGameObject(theGameObject);
-        }
+            => GameObjectPoolModule.PushGameObject(theGameObject);
+        
 
         #endregion
 
         #region ObjectPool
 
-        public static void InitObjectPoolData<T>(int maxCount = -1)
-        {
-            //ObjectPoolModule.InitObjectPoolData<T>(maxCount,infinitePop,fillWhenInit);
-            ObjectPoolModule.InitObjectPoolData<T>(maxCount);
-        }
+        public static void InitObjectPool<T>(int maxCount = -1)
+           => ObjectPoolModule.InitObjectPoolData<T>(maxCount);
         
-        public static void InitObjectPoolData(Type type, int maxCount = -1)
-        {
-            //ObjectPoolModule.InitObjectPoolData(type,maxCount,infinitePop,fillWhenInit);
-            ObjectPoolModule.InitObjectPoolData(type,maxCount);
-        }
+        
+        public static void InitObjectPool(Type type, int maxCount = -1)
+           => ObjectPoolModule.InitObjectPoolData(type,maxCount);
+        
         
         public static T GetObject<T>() where T: class
-        {
-            return ObjectPoolModule.GetObject<T>();
-        }
+            => ObjectPoolModule.GetObject<T>();
+        
         
         public static object GetObject(Type type)
-        {
-            return ObjectPoolModule.GetObject(type);
-        }
+            => ObjectPoolModule.GetObject(type);
+        
         
         public static void PushObject<T>(T theObject)
-        {
-            ObjectPoolModule.PushObject<T>(theObject);
-        }
+            => ObjectPoolModule.PushObject<T>(theObject);
+        
         
         public static void PushObject(Type type,object theObject)
-        {
-            ObjectPoolModule.PushObject(type,theObject);
-        }
+            => ObjectPoolModule.PushObject(type,theObject);
+        
 
         #endregion
     }
