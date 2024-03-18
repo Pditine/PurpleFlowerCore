@@ -61,6 +61,11 @@ namespace PurpleFlowerCore
                 PFCLog.Warning("不存在process:"+processName);
                 return;
             }
+
+            if (!_processes[processName])
+            {
+                _processes.Remove(processName);
+            }
             var theGameObject = _processes[processName].gameObject;
             theGameObject.name = "process";
             Pool.Push(theGameObject);

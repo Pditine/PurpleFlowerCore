@@ -52,6 +52,15 @@ namespace PurpleFlowerCore.Audio
 
         private GameObjectPoolData _pool;
 
+        // private GameObjectPoolData Pool
+        // {
+        //     get
+        //     {
+        //         if (_pool is not null) return _pool;
+        //         _pool = new GameObjectPoolData(transform,);
+        //     }
+        // }
+        
         #endregion
     }
 }

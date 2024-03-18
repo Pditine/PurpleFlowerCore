@@ -1,5 +1,6 @@
 ﻿using UnityEngine.Events;
-namespace PurpleFlowerCore.Event
+using PurpleFlowerCore.Event;
+namespace PurpleFlowerCore
 {
     public static class EventSystem
     {

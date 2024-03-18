@@ -18,6 +18,7 @@ namespace PurpleFlowerCore.Base
                     name = "PurpleFlowerCore"
                 };
                 _instance = pfcGameObject.AddComponent<PFCManager>();
+                DontDestroyOnLoad(pfcGameObject);
                 return _instance;
             }
         }
@@ -33,6 +34,7 @@ namespace PurpleFlowerCore.Base
             if(_instance is not null)
                 Destroy(_instance.gameObject);
             _instance = this;
+            DontDestroyOnLoad(gameObject);
         }
 
         private void OnDisable()

@@ -1,20 +1,36 @@
-﻿using UnityEngine.Events;
+﻿using System;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace PurpleFlowerCore.Utility
 {
-    public static class FixedUpdateUtility
+    public class FixedUpdateUtility : MonoBehaviour
     {
-        // public static void FixedUpdate(float deltaTime,UnityAction action)
-        // {
-        //     MonoSystem.
-        // }
-        //
-        // private static void DoFixedUpdate(float deltaTime,UnityAction action)
-        // {
-        //     while (true)
-        //     {
-        //         
-        //     }
-        // }
+        private float _currentDeltaTime;
+        private float _deltaTime;
+        private UnityAction _action;
+        private bool _canScale;
+        private void Update()
+        {
+            _currentDeltaTime += Time.deltaTime;
+            float theDeltaTime = _canScale ? _deltaTime * Time.timeScale : _deltaTime;
+            if (_currentDeltaTime >= theDeltaTime)
+            {
+                _action?.Invoke();
+                _currentDeltaTime = 0;
+            }
+        }
+
+        public static void FixedUpdate_(float deltaTime,UnityAction action,bool canScale)
+        {
+            var theFixedUpdate = new GameObject("FixedUpdate_" + deltaTime).AddComponent<FixedUpdateUtility>();
+            theFixedUpdate._deltaTime = deltaTime;
+            theFixedUpdate._action = action;
+            theFixedUpdate._canScale = canScale;
+        }
+        
+           
+        
+        
     }
 }
