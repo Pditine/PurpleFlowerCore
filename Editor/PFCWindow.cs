@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace PurpleFlowerCore.Editor
 {
+    
     public class PFCWindow : EditorWindow
     {
         private SaveMode _saveMode;
@@ -11,7 +12,7 @@ namespace PurpleFlowerCore.Editor
         private bool _logError;
         
         [MenuItem("PFC/打开设置菜单")]
-        private static void OpenWindow()
+        public static void OpenWindow()
         {
             var win = GetWindow<PFCWindow>("Purple Flower Core");
             win.Show();
@@ -95,6 +96,30 @@ namespace PurpleFlowerCore.Editor
             {
                 UnityEditor.PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, group.Replace(";" + symbolName, string.Empty));
             }
+        }
+    }
+    
+    public class AutoOpenWindow:AssetPostprocessor
+    {
+
+        private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets,
+            string[] movedAssets, string[] movedFromAssetPaths)
+        {
+            OpenWindow();
+        }
+        // static AutoOpenWindow()
+        // {
+        //     // EditorApplication.delayCall += DoOpenWindow;
+        //     // EditorApplication.delayCall += () =>
+        //     // {
+        //     //     Debug.Log(111);
+        //     // };
+        //     Debug.Log(assetPath);
+        // }
+
+        private static void OpenWindow()
+        {
+            PFCWindow.OpenWindow();
         }
     }
 
