@@ -26,6 +26,7 @@ namespace PurpleFlowerCore.Editor
         public bool LogInfo;
         public bool LogWarning;
         public bool LogError;
+        public bool HasStarted;
 
         public static void ReSet()
         {

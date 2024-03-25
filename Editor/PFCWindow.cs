@@ -97,6 +97,16 @@ namespace PurpleFlowerCore.Editor
                 UnityEditor.PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, group.Replace(";" + symbolName, string.Empty));
             }
         }
+
+        [InitializeOnLoadMethod]
+        private static void AutoOpen()
+        {
+            if (PFCSetting.Instance.HasStarted)
+                return;
+            PFCSetting.Instance.HasStarted = true;
+            PFCSetting.ReSet();
+            EditorApplication.delayCall += OpenWindow;
+        }
     }
     
     // public class AutoOpenWindow : AssetPostprocessor
