@@ -61,5 +61,39 @@ namespace PurpleFlowerCore
             return SaveJsonModule.Load(fileName, type);
         }
 #endif
+
+#if PFC_SAVE_BINARY
+        private static SaveBinaryModule _saveBinaryModule;
+        private static SaveBinaryModule SaveBinaryModule
+        {
+            get
+            {
+                if (_saveBinaryModule is not null)return _saveBinaryModule;
+                _saveBinaryModule = new SaveBinaryModule();
+                return _saveBinaryModule;
+            }
+        }
+        
+        public static void Save(string fileName, object data)
+        {
+            SaveBinaryModule.Save(fileName,data);
+        }
+
+        public static T Load<T>(string fileName) where T: class
+        {
+            return SaveBinaryModule.Load<T>(fileName);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="_">参数无效</param>
+        /// <returns></returns>
+        public static object Load(string fileName, Type _)
+        {
+            return SaveBinaryModule.Load(fileName);
+        }
+#endif
     }
 }

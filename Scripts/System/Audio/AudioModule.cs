@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using PurpleFlowerCore.Pool;
 namespace PurpleFlowerCore.Audio
 {
@@ -52,13 +53,23 @@ namespace PurpleFlowerCore.Audio
 
         private GameObjectPoolData _pool;
 
-        // private GameObjectPoolData Pool
+        private GameObjectPoolData Pool
+        {
+            get
+            {
+                if (_pool is not null) return _pool;
+                _pool = new GameObjectPoolData(transform,ResourceSystem.LoadResource<GameObject>("AudioPlayer"));
+                return _pool;
+            }
+        }
+
+        private HashSet<AudioPlayer> _allAudioEffect = new();
+        
+        
+        
+        // public void PlayOnShot(AudioClip )
         // {
-        //     get
-        //     {
-        //         if (_pool is not null) return _pool;
-        //         _pool = new GameObjectPoolData(transform,);
-        //     }
+        //     
         // }
         
         #endregion

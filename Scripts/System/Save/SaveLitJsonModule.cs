@@ -41,8 +41,8 @@ namespace PurpleFlowerCore.Save
         
         private bool CheckFile(string fileName)
         {
-            if (!Directory.Exists(Application.persistentDataPath + "/LitJson"))
-                Directory.CreateDirectory(Application.persistentDataPath + "/LitJson");
+            if (!Directory.Exists(Application.persistentDataPath + "/LitJson/"))
+                Directory.CreateDirectory(Application.persistentDataPath + "/LitJson/");
             return File.Exists(GetPath(fileName));
         }
     }

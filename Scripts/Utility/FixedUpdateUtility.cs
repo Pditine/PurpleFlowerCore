@@ -29,8 +29,5 @@ namespace PurpleFlowerCore.Utility
             theFixedUpdate._canScale = canScale;
         }
         
-           
-        
-        
     }
 }
