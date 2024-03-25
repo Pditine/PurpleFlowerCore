@@ -99,33 +99,33 @@ namespace PurpleFlowerCore.Editor
         }
     }
     
-    public class AutoOpenWindow : AssetPostprocessor
-    {
-
-        private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets,
-            string[] movedAssets, string[] movedFromAssetPaths)
-        {
-            foreach (var asset in importedAssets)
-            {
-                if(asset is "PFCChecker.cs")
-                    Debug.Log(true);
-            }
-            OpenWindow();
-        }
-        // static AutoOpenWindow()
-        // {
-        //     // EditorApplication.delayCall += DoOpenWindow;
-        //     // EditorApplication.delayCall += () =>
-        //     // {
-        //     //     Debug.Log(111);
-        //     // };
-        //     Debug.Log(assetPath);
-        // }
-
-        private static void OpenWindow()
-        {
-            PFCWindow.OpenWindow();
-        }
-    }
+    // public class AutoOpenWindow : AssetPostprocessor
+    // {
+    //
+    //     private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets,
+    //         string[] movedAssets, string[] movedFromAssetPaths)
+    //     {
+    //         foreach (var asset in importedAssets)
+    //         {
+    //             if(asset is "PFCChecker.cs")
+    //                 Debug.Log(true);
+    //         }
+    //         OpenWindow();
+    //     }
+    //     // static AutoOpenWindow()
+    //     // {
+    //     //     // EditorApplication.delayCall += DoOpenWindow;
+    //     //     // EditorApplication.delayCall += () =>
+    //     //     // {
+    //     //     //     Debug.Log(111);
+    //     //     // };
+    //     //     Debug.Log(assetPath);
+    //     // }
+    //
+    //     private static void OpenWindow()
+    //     {
+    //         PFCWindow.OpenWindow();
+    //     }
+    // }g
 
 }
