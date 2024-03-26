@@ -15,6 +15,7 @@ namespace PurpleFlowerCore.Pool
         {
             _poolRoot = poolRoot;
             _originalGameObject = originalGameObject;
+            Init();
         }
 
         public void Init(int maxCount = -1,bool infinitePop = true,bool fillWhenInit = false)

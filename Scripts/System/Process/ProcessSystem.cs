@@ -21,7 +21,6 @@ namespace PurpleFlowerCore
                     transform = { parent = PFCManager.Instance.transform }
                 };
                 _pool = new GameObjectPoolData(root.transform,Resources.Load<GameObject>("PFCRes/Process"));
-                _pool.Init();
                 return _pool;
             }
         }

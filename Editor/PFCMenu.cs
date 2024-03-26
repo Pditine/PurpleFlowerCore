@@ -16,5 +16,6 @@ namespace PurpleFlowerCore.Editor
         {
             Application.OpenURL("https://purpleditine.top/");
         }
+        
     }
 }

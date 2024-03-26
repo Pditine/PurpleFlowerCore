@@ -1,30 +1,38 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace PurpleFlowerCore.Audio
 {
     public class AudioPlayer : MonoBehaviour
     {
-        private AudioSource _audioSource;
-        public AudioSource AudioSource => _audioSource;
-        public void Init()
+        [SerializeField]private AudioSource audioSource;
+        public AudioSource AudioSource => audioSource;
+        
+        public event UnityAction FinishCallBack;
+
+        public void Play(AudioClip clip,float volume,UnityAction finishCallBack)
         {
-            var audioSource = GetComponent<AudioSource>();
-            _audioSource = audioSource ? audioSource : gameObject.AddComponent<AudioSource>();
-            
+            FinishCallBack += finishCallBack;
+            audioSource.clip = clip;
+            audioSource.volume = volume;
+            Invoke(nameof(PlayFinished),clip.length);
+            audioSource.Play();
         }
 
-        public void Play()
+        private void Mute()
         {
-            //_audioSource.PlayOneShot();
-            //_audioSource.
+            audioSource.mute = true;
         }
 
-        public void Destroy()
+        private void UnMute()
         {
-            
+            audioSource.mute = false;
         }
-        
-        
-        
+
+        private void PlayFinished()
+        {
+            FinishCallBack?.Invoke();
+            FinishCallBack = null;
+        }
     }
 }

@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using PurpleFlowerCore.Pool;
+﻿using UnityEngine;
+
 namespace PurpleFlowerCore.Audio
 {
-    public class AudioModule : MonoBehaviour
+    public class AudioBGMModule : MonoBehaviour
     {
         #region BGM
 
@@ -26,12 +25,12 @@ namespace PurpleFlowerCore.Audio
             BgmSource.Play();
         }
 
-        public void PauseBGM()
+        public void Pause()
         {
             BgmSource.Pause();
         }
 
-        public void RePlayBGM()
+        public void Unpause()
         {
             BgmSource.Play();
         }
@@ -42,6 +41,7 @@ namespace PurpleFlowerCore.Audio
         }
 
         
+        
         public AudioSource GetAudioSource()
         {
             return BgmSource;
@@ -49,29 +49,6 @@ namespace PurpleFlowerCore.Audio
         
         #endregion
 
-        #region Effect
-
-        private GameObjectPoolData _pool;
-
-        private GameObjectPoolData Pool
-        {
-            get
-            {
-                if (_pool is not null) return _pool;
-                _pool = new GameObjectPoolData(transform,ResourceSystem.LoadResource<GameObject>("AudioPlayer"));
-                return _pool;
-            }
-        }
-
-        private HashSet<AudioPlayer> _allAudioEffect = new();
-        
-        
-        
-        // public void PlayOnShot(AudioClip )
-        // {
-        //     
-        // }
-        
-        #endregion
+       
     }
 }
