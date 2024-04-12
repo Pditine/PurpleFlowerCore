@@ -1,11 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace PurpleFlowerCore.Audio
 {
     public class AudioBGMModule : MonoBehaviour
     {
-        #region BGM
-
         private AudioSource _bgmSource;
 
         private AudioSource BgmSource
@@ -18,7 +17,23 @@ namespace PurpleFlowerCore.Audio
                 return _bgmSource;
             }
         }
-        
+
+        public float Volume
+        {
+            get => BgmSource.volume;
+            set
+            {
+                if (value <= 0) throw new ArgumentOutOfRangeException(nameof(value));
+                BgmSource.volume = value;
+            }
+        }
+
+        public bool Mute
+        {
+            get => BgmSource.mute;
+            set => BgmSource.mute = value;
+        }
+
         public void PlayBGM(AudioClip clip)
         {
             BgmSource.clip = clip;
@@ -34,21 +49,6 @@ namespace PurpleFlowerCore.Audio
         {
             BgmSource.Play();
         }
-
-        public void ChangeBGMValue(float volume)
-        {
-            BgmSource.volume = volume;
-        }
-
         
-        
-        public AudioSource GetAudioSource()
-        {
-            return BgmSource;
-        }
-        
-        #endregion
-
-       
     }
 }

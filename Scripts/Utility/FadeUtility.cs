@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace PurpleFlowerCore.Utility
 {
-    public class FadeUtility : Singleton<FadeUtility>
+    public class FadeUtility : SafeSingleton<FadeUtility>
     {
         public static void FadeOut(Graphic graphic,float speed, UnityAction allBack = null, float alpha = 1)
         {

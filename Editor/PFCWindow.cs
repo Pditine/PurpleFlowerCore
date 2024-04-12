@@ -41,6 +41,9 @@ namespace PurpleFlowerCore.Editor
             _logInfo = EditorGUILayout.Toggle("使用LogInfo", _logInfo);
             _logWarning = EditorGUILayout.Toggle("使用LogWarning", _logWarning);
             _logError = EditorGUILayout.Toggle("使用LogError", _logError);
+            
+            //EditorGUILayout.BeginVertical(EditorGUILayout.TextField(,));
+            
             if (GUILayout.Button("应用"))
                 Apply();
         }

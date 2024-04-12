@@ -7,7 +7,7 @@ namespace PurpleFlowerCore.Utility
     /// <summary>
     /// 请在Scripting Define Symbols中添加PFC_XLUA以使用功能
     /// </summary>
-    public class LuaManager : Singleton<LuaManager>
+    public class LuaManager : SafeSingleton<LuaManager>
     {
 #if PFC_XLUA
         private LuaEnv _luaEnv;

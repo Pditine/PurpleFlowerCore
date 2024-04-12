@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 
 namespace PurpleFlowerCore.Utility
 {
-    public class ABManager : Singleton<ABManager>
+    public class ABManager : SafeSingleton<ABManager>
     {
         private AssetBundle _mainAB;
         private AssetBundle MainAB
