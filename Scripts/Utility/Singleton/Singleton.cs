@@ -4,7 +4,7 @@ using System.Reflection;
 namespace PurpleFlowerCore.Utility
 {
     /// <summary>
-    /// µ¥ÀıÄ£Ê½µÄ»ùÀà
+    /// å•ä¾‹æ¨¡å¼çš„åŸºç±»
     /// </summary>
     public abstract class Singleton<T> where T : class, new()
     {
@@ -19,7 +19,7 @@ namespace PurpleFlowerCore.Utility
         
     }
     /// <summary>
-    /// µ¥ÀıÄ£Ê½µÄ»ùÀà£¬ÇëÏÔÊ¾ÊµÏÖ×ÓÀàµÄË½ÓĞ¹¹Ôìº¯Êı
+    /// å•ä¾‹æ¨¡å¼çš„åŸºç±»ï¼Œè¯·æ˜¾ç¤ºå®ç°å­ç±»çš„ç§æœ‰æ„é€ å‡½æ•°
     /// </summary>
     public abstract class SafeSingleton<T> where T : class
     {
@@ -30,16 +30,16 @@ namespace PurpleFlowerCore.Utility
         {
             get
             {
-                if (_instance is not null) return _instance;
+                if (_instance != null) return _instance;
                 lock (LockObj)
                 {
-                    if (_instance is not null) return _instance;
+                    if (_instance != null) return _instance;
                     Type type = typeof(T);
                     var info = type.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic,
                         null, Type.EmptyTypes, null);
                     if (info is not null) _instance = info.Invoke(null) as T;
                     else
-                        PFCLog.Error("ÎŞ·¨µÃµ½×ÓÀàµÄË½ÓĞÎŞ²Î¹¹Ôìº¯Êı");
+                        PFCLog.Error("æ— æ³•å¾—åˆ°å­ç±»çš„ç§æœ‰æ— å‚æ„é€ å‡½æ•°");
                     return _instance;
                 }
             }

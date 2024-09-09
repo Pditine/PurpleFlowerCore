@@ -8,7 +8,7 @@ namespace PurpleFlowerCore.Utility
         public static T Instance;
         protected virtual void Awake()
         {
-            if (Instance is null)
+            if (Instance == null)
             {
                 Instance = this as T;
             }
@@ -25,7 +25,7 @@ namespace PurpleFlowerCore.Utility
         public static T Instance;
         protected virtual void Awake()
         {
-            if (Instance is null)
+            if (Instance == null)
             {
                 Instance = this as T;
                 DontDestroyOnLoad(gameObject);
@@ -45,7 +45,7 @@ namespace PurpleFlowerCore.Utility
         {
             get
             {
-                if (_instance is not null) return _instance;
+                if (!_instance) return _instance;
                 var theGameObject = new GameObject(typeof(T).Name);
                 _instance = theGameObject.AddComponent<T>();
                 return _instance;
