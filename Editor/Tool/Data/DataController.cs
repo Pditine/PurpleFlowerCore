@@ -144,27 +144,49 @@ namespace Pditine.Tool
 
         private void ShowObject()
         {
-            if (_currentData != null)
-            {
-                Type targetType = _currentData.GetType();
-                
-                FieldInfo[] fields =
-                    targetType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
-                EditorGUI.BeginChangeCheck();
-                
-                foreach (FieldInfo field in fields)
+            ShowObject(_currentData);
+        }
+
+        private void ShowObject(ScriptableObject data, Type type = null)
+        {
+            var currentData = data;
+            if (currentData == null) return;
+            // if (type != null && type != typeof(ScriptableObject))
+            // {
+            //     ShowObject(data, type.BaseType);
+            // }else if(currentData.GetType().BaseType != typeof(ScriptableObject))
+            // {
+            //     ShowObject(data, currentData.GetType().BaseType);
+            // }
+            if (type == null)
+            {
+                if(currentData.GetType().BaseType != typeof(ScriptableObject))
+                    ShowObject(data, currentData.GetType().BaseType);
+            }else if(type.BaseType != typeof(ScriptableObject))
+            {
+                ShowObject(data, type.BaseType);
+            }
+            
+            Type targetType = type ?? currentData.GetType();
+            
+            FieldInfo[] fields =
+                targetType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+            EditorGUI.BeginChangeCheck();
+            
+            foreach (FieldInfo field in fields)
+            {
+                if (field.IsPublic || Attribute.IsDefined(field, typeof(SerializeField)))
                 {
-                    if (field.IsPublic || Attribute.IsDefined(field, typeof(SerializeField)))
-                    {
-                        ShowField(field, _currentData);
-                    }
-                }
-                if (EditorGUI.EndChangeCheck())
-                {
-                    EditorUtility.SetDirty(_currentData);
+                    ShowField(field, currentData);
                 }
             }
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorUtility.SetDirty(currentData);
+            }
+            
         }
 
         private void ShowField(FieldInfo field, object target)
@@ -245,7 +267,7 @@ namespace Pditine.Tool
             for (int i = 0; i < array.Length; i++)
             {
                 object element = array.GetValue(i);
-                EditorGUILayout.LabelField($"{field.Name}[{i}]");
+                EditorGUILayout.LabelField($"   {field.Name}[{i}]");
                 ShowField(elementType, element, newValue => array.SetValue(newValue, i));
             }
         }
@@ -275,7 +297,7 @@ namespace Pditine.Tool
                 for (int i = 0; i < list.Count; i++)
                 {
                     object element = list[i];
-                    EditorGUILayout.LabelField($"{field.Name}[{i}]");
+                    EditorGUILayout.LabelField($"   {field.Name}[{i}]");
                     ShowField(elementType, element, newValue => list[i] = newValue);
                 }
             }
