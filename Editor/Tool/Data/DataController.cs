@@ -6,6 +6,7 @@ using System.Reflection;
 using PurpleFlowerCore;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Pditine.Tool
 {
@@ -179,6 +180,15 @@ namespace Pditine.Tool
                             bool value = (bool)field.GetValue(_currentData);
                             value = EditorGUILayout.Toggle(field.Name, value);
                             field.SetValue(_currentData, value);
+                        }else if (fieldType.IsEnum)
+                        {
+                            Enum value = (Enum)field.GetValue(_currentData);
+                            value = EditorGUILayout.EnumPopup(field.Name, value);
+                            field.SetValue(_currentData, value);
+                        }else if (typeof(UnityEvent).IsAssignableFrom(fieldType))
+                        {
+                            UnityEvent unityEvent = (UnityEvent)field.GetValue(_currentData);
+                            DrawUnityEvent(field.Name, unityEvent);
                         }
                     }
                 }
@@ -186,6 +196,29 @@ namespace Pditine.Tool
                 {
                     EditorUtility.SetDirty(_currentData);
                 }
+            }
+        }
+        private void DrawUnityEvent(string label, UnityEvent unityEvent)
+        {
+            if (unityEvent == null)
+            {
+                EditorGUILayout.LabelField(label, "null");
+                return;
+            }
+
+            EditorGUILayout.LabelField(label);
+
+            SerializedObject serializedObject = new SerializedObject(_currentData);
+            SerializedProperty property = serializedObject.FindProperty(label);
+
+            if (property != null)
+            {
+                EditorGUILayout.PropertyField(property, true);
+                serializedObject.ApplyModifiedProperties();
+            }
+            else
+            {
+                EditorGUILayout.LabelField("Could not find SerializedProperty for UnityEvent");
             }
         }
     }
