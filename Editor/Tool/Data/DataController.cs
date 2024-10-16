@@ -177,7 +177,8 @@ namespace Pditine.Tool
             
             foreach (FieldInfo field in fields)
             {
-                if (field.IsPublic || Attribute.IsDefined(field, typeof(SerializeField)))
+                if ((field.IsPublic && !Attribute.IsDefined(field, typeof(HideInInspector)))
+                     || Attribute.IsDefined(field, typeof(SerializeField)))
                 {
                     ShowField(field, currentData);
                 }
@@ -186,7 +187,6 @@ namespace Pditine.Tool
             {
                 EditorUtility.SetDirty(currentData);
             }
-            
         }
 
         private void ShowField(FieldInfo field, object target)
@@ -225,6 +225,10 @@ namespace Pditine.Tool
             else if (typeof(IList).IsAssignableFrom(fieldType))
             {
                 ShowList(field, target);
+            }
+            else if (typeof(UnityEngine.Object).IsAssignableFrom(fieldType))
+            {
+                field.SetValue(target, EditorGUILayout.ObjectField(field.Name, (UnityEngine.Object)value, fieldType, true));
             }
             else if (fieldType.IsClass || fieldType.IsValueType)
             {
