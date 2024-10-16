@@ -144,7 +144,6 @@ namespace Pditine.Tool
 
         private void ShowObject()
         {
-
             ShowObject(_currentData);
         }
 
@@ -287,10 +286,7 @@ namespace Pditine.Tool
                 {
                     while (newSize > list.Count)
                     {
-                        if(elementType == typeof(string))
-                            list.Add("");
-                        else
-                            list.Add(Activator.CreateInstance(elementType));
+                        list.Add(GetDefaultValue(elementType));
                     }
                     while (newSize < list.Count)
                     {
@@ -316,7 +312,7 @@ namespace Pditine.Tool
             object value = field.GetValue(target);
             if (value == null)
             {
-                value = Activator.CreateInstance(field.FieldType);
+                value = GetDefaultValue(field.FieldType);
                 field.SetValue(target, value);
             }
 
@@ -360,6 +356,10 @@ namespace Pditine.Tool
             {
                 ShowList(fieldType, (IList)value, setValue);
             }
+            else if (typeof(UnityEngine.Object).IsAssignableFrom(fieldType))
+            {
+                setValue(EditorGUILayout.ObjectField((UnityEngine.Object)value, fieldType));
+            }
             else if (fieldType.IsClass || fieldType.IsValueType)
             {
                 ShowClassOrStruct(fieldType, value, setValue);
@@ -395,10 +395,7 @@ namespace Pditine.Tool
             {
                 while (newSize > list.Count)
                 {
-                    if(elementType == typeof(string))
-                        list.Add("");
-                    else
-                        list.Add(Activator.CreateInstance(elementType));
+                    list.Add(GetDefaultValue(elementType));
                 }
                 while (newSize < list.Count)
                 {
@@ -418,7 +415,7 @@ namespace Pditine.Tool
         {
             if (value == null)
             {
-                value = Activator.CreateInstance(fieldType);
+                value = GetDefaultValue(fieldType);
                 setValue(value);
             }
 
@@ -429,6 +426,11 @@ namespace Pditine.Tool
                 ShowField(subField, value);
             }
             EditorGUI.indentLevel--;
+        }
+        
+        private static object GetDefaultValue(Type type)
+        {
+            return type.IsValueType ? Activator.CreateInstance(type) : null;
         }
     }
 }
