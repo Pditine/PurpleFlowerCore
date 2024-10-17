@@ -17,5 +17,19 @@ namespace PurpleFlowerCore.Utility
             yield return new WaitForSeconds(waitTime);
             action?.Invoke();
         }
+        
+        public static void DelayFrame(int frame,UnityAction action)
+        {
+            MonoSystem.Start_Coroutine(DoDelayFrame(frame, action));
+        }
+        
+        private static IEnumerator DoDelayFrame(int frame,UnityAction action)
+        {
+            for (int i = 0; i < frame; i++)
+            {
+                yield return null;
+            }
+            action?.Invoke();
+        }
     }
 }
