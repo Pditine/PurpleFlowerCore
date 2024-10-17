@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AssetBundleModule;
 using UnityEngine;
 using UnityEngine.Events;
 using Object = UnityEngine.Object;
+
+namespace UnityEngine.AssetBundleModule { }
 
 namespace PurpleFlowerCore.Utility
 {
