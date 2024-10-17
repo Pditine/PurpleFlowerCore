@@ -30,8 +30,14 @@ namespace PurpleFlowerCore.Editor
 
         public static void ReSet()
         {
-            var jsonStr = JsonUtility.ToJson(_instance);
-            File.WriteAllText(Path+"setting.json", jsonStr);
+            if (!Directory.Exists(Path)) Directory.CreateDirectory(Path);
+            if (!File.Exists(Path + "setting.json")) File.Create(Path + "setting.json");
+            if (_instance == null)
+            {
+                _instance = new PFCSetting();
+            }
+            File.WriteAllText(Path+"setting.json", JsonUtility.ToJson(_instance));
+            
         }
 
         // [MenuItem("PFC/创建默认json文件")]

@@ -231,21 +231,21 @@ namespace PurpleFlowerCore.Editor.Tool
         // }
     }
     
-    public class TestWindow : EditorWindow
-    {
-        private int _testValue = 0;
-        
-        [MenuItem("PFC/TestWindow")]
-        public static void ShowWindow()
-        {
-            GetWindow<TestWindow>("TestWindow");
-        }
-
-        private void OnGUI()
-        {
-            //EditorUI.ShowInt("Test Value", ref _testValue);
-            PFCLog.Info("TestWindow" + _testValue);
-            
-        }
-    }
+    // public class TestWindow : EditorWindow
+    // {
+    //     private int _testValue = 0;
+    //     
+    //     [MenuItem("PFC/TestWindow")]
+    //     public static void ShowWindow()
+    //     {
+    //         GetWindow<TestWindow>("TestWindow");
+    //     }
+    //
+    //     private void OnGUI()
+    //     {
+    //         //EditorUI.ShowInt("Test Value", ref _testValue);
+    //         PFCLog.Info("TestWindow" + _testValue);
+    //         
+    //     }
+    // }
 }
