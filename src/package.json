@@ -2,6 +2,7 @@
   "name": "com.Pditine.PurpleFlowerCore",
   "version": "0.31",
   "displayName": "PFC",
+  "unity": "2019",
   "description": "程序开发框架，提供多种开发可能用到的定制化功能或编辑器工具",
   "keywords": [
     "程序框架",
