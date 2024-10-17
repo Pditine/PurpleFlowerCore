@@ -19,7 +19,7 @@ namespace PurpleFlowerCore.Editor
                 return _instance;
             }
         }
-        private static string Path => Application.dataPath + "/PurpleFlowerCore/Editor/Setting/";
+        private static string Path => Application.persistentDataPath + "/Setting/";
         
         public SaveMode SaveMode;
         //public ResourceMode ResourceMode;
