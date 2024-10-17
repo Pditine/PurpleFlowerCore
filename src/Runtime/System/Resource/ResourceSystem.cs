@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using PurpleFlowerCore.Resource;
+//using PurpleFlowerCore.Resource;
 using Object = UnityEngine.Object;
 
 namespace PurpleFlowerCore
@@ -65,67 +65,67 @@ namespace PurpleFlowerCore
 //#endif
         #endregion
 
-        #region AssetBundle
+        // #region AssetBundle
 
-//#if PFC_RES_AB
-        private static AssetBundleModule _assetBundleModule;
-
-        private static AssetBundleModule AssetBundleModule
-        {
-            get
-            {
-                if (_assetBundleModule is not null) return _assetBundleModule;
-                _assetBundleModule = new AssetBundleModule();
-                return _assetBundleModule;
-            }
-        }
-
-        public static AssetBundle LoadAssetBundle(string abName)
-        {
-            return AssetBundleModule.LoadAssetBundle(abName);
-        }
-        
-        public static void UnLoadAssetBundle(string abName)
-        {
-           AssetBundleModule.UnLoadAssetBundle(abName);
-        }
-
-        public static void ClearAssetBundle()
-        {
-            AssetBundleModule.ClearAssetBundle();
-        }
-        
-        public static T LoadABResource<T>(string abName, string resName) where T : Object
-        {
-            return AssetBundleModule.LoadResource<T>(abName, resName);
-        }
-
-        public static object LoadABResource(string abName, string resName,System.Type type)
-        {
-            return AssetBundleModule.LoadResource(abName, resName, type);
-        }
-        
-        public static object LoadABResource(string abName, string resName)
-        {
-            return AssetBundleModule.LoadResource(abName, resName);
-        }
-
-        public static void LoadABResourceAsync<T>(string abName, string resName,UnityAction<T> callBack) where T: Object
-        {
-           AssetBundleModule.LoadResourceAsync<T>(abName,resName,callBack);
-        }
-        
-        public static void LoadABResourceAsync(string abName, string resName,UnityAction<Object> callBack)
-        {
-            AssetBundleModule.LoadResourceAsync(abName,resName,callBack);
-        }
-        
-        public static void LoadABResourceAsync(string abName, string resName,System.Type type,UnityAction<Object> callBack)
-        {
-            AssetBundleModule.LoadResourceAsync(abName,resName,type,callBack);
-        }
-//#endif
-        #endregion
+// #if PFC_RES_AB
+//         private static AssetBundleModule _assetBundleModule;
+//
+//         private static AssetBundleModule AssetBundleModule
+//         {
+//             get
+//             {
+//                 if (_assetBundleModule is not null) return _assetBundleModule;
+//                 _assetBundleModule = new AssetBundleModule();
+//                 return _assetBundleModule;
+//             }
+//         }
+//
+//         public static AssetBundle LoadAssetBundle(string abName)
+//         {
+//             return AssetBundleModule.LoadAssetBundle(abName);
+//         }
+//         
+//         public static void UnLoadAssetBundle(string abName)
+//         {
+//            AssetBundleModule.UnLoadAssetBundle(abName);
+//         }
+//
+//         public static void ClearAssetBundle()
+//         {
+//             AssetBundleModule.ClearAssetBundle();
+//         }
+//         
+//         public static T LoadABResource<T>(string abName, string resName) where T : Object
+//         {
+//             return AssetBundleModule.LoadResource<T>(abName, resName);
+//         }
+//
+//         public static object LoadABResource(string abName, string resName,System.Type type)
+//         {
+//             return AssetBundleModule.LoadResource(abName, resName, type);
+//         }
+//         
+//         public static object LoadABResource(string abName, string resName)
+//         {
+//             return AssetBundleModule.LoadResource(abName, resName);
+//         }
+//
+//         public static void LoadABResourceAsync<T>(string abName, string resName,UnityAction<T> callBack) where T: Object
+//         {
+//            AssetBundleModule.LoadResourceAsync<T>(abName,resName,callBack);
+//         }
+//         
+//         public static void LoadABResourceAsync(string abName, string resName,UnityAction<Object> callBack)
+//         {
+//             AssetBundleModule.LoadResourceAsync(abName,resName,callBack);
+//         }
+//         
+//         public static void LoadABResourceAsync(string abName, string resName,System.Type type,UnityAction<Object> callBack)
+//         {
+//             AssetBundleModule.LoadResourceAsync(abName,resName,type,callBack);
+//         }
+// #endif
+//         #endregion
 
     }
 }
