@@ -1,0 +1,17 @@
+{
+  "name": "com.Pditine.PurpleFlowerCore",
+  "version": "0.31",
+  "displayName": "PFC",
+  "description": "程序开发框架，提供多种开发可能用到的定制化功能或编辑器工具",
+  "keywords": [
+    "程序框架",
+    "framework",
+    "data config",
+    "数据配置"
+  ],
+  "author": {
+    "name": "Pditine",
+    "email": "hanfe666@outlook.com",
+    "url": "purpleditine.top"
+  }
+}

@@ -1,5 +1,7 @@
 using System;
-namespace Pditine.Tool
+using UnityEngine;
+
+namespace PurpleFlowerCore.Utility
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class ConfigurableAttribute : Attribute
