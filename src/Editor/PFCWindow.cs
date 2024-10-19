@@ -11,7 +11,7 @@ namespace PurpleFlowerCore.Editor
         private bool _logWarning;
         private bool _logError;
         
-        [MenuItem("PFC/打开设置菜单")]
+        [MenuItem("PFC/打开设置菜单(暂时弃用)")]
         public static void OpenWindow()
         {
             var win = GetWindow<PFCWindow>("Purple Flower Core");
