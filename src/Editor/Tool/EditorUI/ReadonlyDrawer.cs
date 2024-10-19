@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PurpleFlowerCore.Editor.Tool
 {
-    [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
+    [CustomPropertyDrawer(typeof(ROAttribute))]
     public class ReadOnlyDrawer : PropertyDrawer
     {
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
