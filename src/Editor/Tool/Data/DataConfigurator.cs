@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace PurpleFlowerCore
 {
-    public class DataController : EditorWindow
+    public class DataConfigurator : EditorWindow
     {
         private ScriptableObject _currentData;
         private ScriptableObject _dataBuffer;
@@ -38,7 +38,7 @@ namespace PurpleFlowerCore
         [MenuItem("PFC/综合数据配置器")]
         public static void OpenWindow()
         {
-            var win = GetWindow<DataController>("综合数据配置器");
+            var win = GetWindow<DataConfigurator>("综合数据配置器");
             win.Show();
         }
         

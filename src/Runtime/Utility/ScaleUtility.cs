@@ -7,14 +7,14 @@ namespace PurpleFlowerCore.Utility
 {
     public static class ScaleUtility
     {
-        public static HashSet<Transform> transformBuffer = new();
+        private static HashSet<Transform> transformBuffer = new();
 
-        public static void AddBuffer(Transform transform)
+        private static void AddBuffer(Transform transform)
         {
             transformBuffer.Add(transform);
         }
 
-        public static void RemoveBuffer(Transform transform)
+        private static void RemoveBuffer(Transform transform)
         {
             if(!transformBuffer.Contains(transform)) return;
             transformBuffer.Remove(transform);

@@ -57,12 +57,7 @@ namespace PurpleFlowerCore.Editor.Tool
             if (property != null)
             {
                 EditorGUILayout.PropertyField(property, new GUIContent(info.Name), true , options);
-                if (serializedObject.ApplyModifiedProperties())
-                {
-                    Debug.Log("ApplyModifiedProperties");
-                    EditorUtility.SetDirty((UnityEngine.Object)target);
-                    AssetDatabase.SaveAssets();
-                }
+                serializedObject.ApplyModifiedProperties();
             }
             else
             {
@@ -78,6 +73,8 @@ namespace PurpleFlowerCore.Editor.Tool
                 EditorGUILayout.LabelField(info.Name, $"Could not find or support Serialized Property : ({info.FieldType}){info.Name}",style);
             }
         }
+        
+        
         
         private static void ShowObject(ScriptableObject data, Type type = null)
         {
