@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace PurpleFlowerCore.Utility
 {
-    public class FadeUtility : SafeSingleton<FadeUtility>
+    public static class FadeUtility
     {
         private static HashSet<Object> transformBuffer = new();
 
@@ -22,10 +22,10 @@ namespace PurpleFlowerCore.Utility
         }
         public static bool FadeOut(Graphic graphic,float speed, UnityAction callBack = null, float alpha = 1)
         {
-            if (transformBuffer.Contains(graphic)) return false;
+            //if (transformBuffer.Contains(graphic)) return false;
             AddBuffer(graphic);
             MonoSystem.Start_Coroutine(DoFadeOut(graphic,speed,callBack,alpha));
-            return false;
+            return true;
         }
 
         private static IEnumerator DoFadeOut(Graphic graphic,float speed, UnityAction callBack,float alpha)
@@ -44,10 +44,10 @@ namespace PurpleFlowerCore.Utility
         
         public static bool FadeOut(CanvasGroup graphic,float speed, UnityAction callBack = null, float alpha = 1)
         {
-            if (transformBuffer.Contains(graphic)) return false;
+            //if (transformBuffer.Contains(graphic)) return false;
             AddBuffer(graphic);
             MonoSystem.Start_Coroutine(DoFadeOut(graphic,speed,callBack,alpha));
-            return false;
+            return true;
         }
 
         private static IEnumerator DoFadeOut(CanvasGroup graphic,float speed, UnityAction callBack,float alpha)
@@ -67,10 +67,10 @@ namespace PurpleFlowerCore.Utility
         
         public static bool FadeOutTo(Graphic graphic,float speed, UnityAction callBack = null, float alpha = 1)
         {
-            if (transformBuffer.Contains(graphic)) return false;
+            //if (transformBuffer.Contains(graphic)) return false;
             AddBuffer(graphic);
             MonoSystem.Start_Coroutine(DoFadeOutTo(graphic,speed,callBack,alpha));
-            return false;
+            return true;
         }
 
         private static IEnumerator DoFadeOutTo(Graphic graphic,float speed, UnityAction callBack,float alpha)
@@ -88,10 +88,10 @@ namespace PurpleFlowerCore.Utility
         
         public static bool FadeOut(SpriteRenderer graphic,float speed, UnityAction callBack = null, float alpha = 1)
         {
-            if (transformBuffer.Contains(graphic)) return false;
+            //if (transformBuffer.Contains(graphic)) return false;
             AddBuffer(graphic);
             MonoSystem.Start_Coroutine(DoFadeOut(graphic,speed,callBack,alpha));
-            return false;
+            return true;
         }
 
         private static IEnumerator DoFadeOut(SpriteRenderer graphic,float speed, UnityAction callBack,float alpha)
@@ -110,10 +110,10 @@ namespace PurpleFlowerCore.Utility
         
         public static bool FadeIn(Graphic graphic,float speed, UnityAction callBack = null, float alpha = 1)
         {
-            if (transformBuffer.Contains(graphic)) return false;
+            //if (transformBuffer.Contains(graphic)) return false;
             AddBuffer(graphic);
             MonoSystem.Start_Coroutine(DoFadeIn(graphic,speed,callBack,alpha));
-            return false;
+            return true;
         }
 
         private static IEnumerator DoFadeIn(Graphic graphic,float speed, UnityAction callBack, float alpha)
@@ -131,10 +131,10 @@ namespace PurpleFlowerCore.Utility
         }
         public static bool FadeInAndStay(Graphic graphic,float speed, UnityAction callBack = null, float alpha = 1)
         {
-            if (transformBuffer.Contains(graphic)) return false;
+            //if (transformBuffer.Contains(graphic)) return false;
             AddBuffer(graphic);
             MonoSystem.Start_Coroutine(DoFadeInAndStay(graphic,speed,callBack,alpha));
-            return false;
+            return true;
         }
 
         private static IEnumerator DoFadeInAndStay(Graphic graphic,float speed, UnityAction callBack, float alpha)
@@ -152,10 +152,10 @@ namespace PurpleFlowerCore.Utility
         
         public static bool FadeInAndStay(SpriteRenderer graphic,float speed, UnityAction callBack = null, float alpha = 1)
         {
-            if (transformBuffer.Contains(graphic)) return false;
+            //if (transformBuffer.Contains(graphic)) return false;
             AddBuffer(graphic);
             MonoSystem.Start_Coroutine(DoFadeInAndStay(graphic,speed,callBack,alpha));
-            return false;
+            return true;
         }
         
         private static IEnumerator DoFadeInAndStay(SpriteRenderer graphic,float speed, UnityAction callBack, float alpha)
@@ -173,10 +173,10 @@ namespace PurpleFlowerCore.Utility
         
         public static bool FadeInAndStay(CanvasGroup graphic,float speed, UnityAction callBack = null, float alpha = 1)
         {
-            if (transformBuffer.Contains(graphic)) return false;
+            //if (transformBuffer.Contains(graphic)) return false;
             AddBuffer(graphic);
             MonoSystem.Start_Coroutine(DoFadeInAndStay(graphic,speed,callBack,alpha));
-            return false;
+            return true;
         }
 
         private static IEnumerator DoFadeInAndStay(CanvasGroup graphic,float speed, UnityAction callBack, float alpha)
