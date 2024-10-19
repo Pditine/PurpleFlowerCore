@@ -31,8 +31,8 @@ namespace PurpleFlowerCore.Utility
         {
             while (Mathf.Abs(transform.localScale.x-target.x)>0.01f)
             {
-                transform.localScale = Vector3.Lerp(transform.localScale, target, 1/speed);
-                yield return new WaitForSeconds(0.01f);
+                transform.localScale = Vector3.Lerp(transform.localScale, target, 0.01f);
+                yield return new WaitForSeconds(1/speed);
             }
             transform.localScale = target;
             RemoveBuffer(transform);
@@ -51,8 +51,8 @@ namespace PurpleFlowerCore.Utility
         {
             while (Vector3.Distance(transform.localScale, target)>0.01f)
             {
-                transform.localScale = Vector3.MoveTowards(transform.localScale, target, speed);
-                yield return new WaitForSeconds(0.01f);
+                transform.localScale = Vector3.MoveTowards(transform.localScale, target, 0.01f);
+                yield return new WaitForSeconds(1/speed);
             }
             transform.localScale = target;
             RemoveBuffer(transform);
