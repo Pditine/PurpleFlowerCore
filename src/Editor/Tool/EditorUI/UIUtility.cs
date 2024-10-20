@@ -6,11 +6,11 @@ using UnityEngine.Events;
 
 namespace PurpleFlowerCore.Editor.Tool
 {
-    public static class EditorUI
+    public static class UIUtility
     {
         // private void ShowField(FieldInfo field, object target)
         // {}
-        public static void ShowFieldRW<T>(string label, ref object value, GUIStyle style = null, params GUILayoutOption[] options)
+        public static void ShowField<T>(string label, ref object value, GUIStyle style = null, params GUILayoutOption[] options)
         {
             style ??= new GUIStyle();
             var type = typeof(T);
@@ -43,6 +43,40 @@ namespace PurpleFlowerCore.Editor.Tool
             // else 
             //     value = ShowProperty()
                 
+        }
+
+        public static void ShowField(FieldInfo info, object target, GUIStyle style = null, params GUILayoutOption[] options)
+        {
+            style ??= new GUIStyle();
+            var type = info.FieldType;
+            
+            if(type == typeof(int))
+            {
+                EditorGUILayout.IntField(info.Name, (int)info.GetValue(target), style, options);
+            }
+            else if (type == typeof(float))
+            {
+                EditorGUILayout.FloatField(info.Name, (float)info.GetValue(target), style, options);
+            }
+            else if (type == typeof(bool))
+            {
+                EditorGUILayout.Toggle(info.Name, (bool)info.GetValue(target), options);
+            }
+            else if (type == typeof(string))
+            {
+                EditorGUILayout.TextField(info.Name, (string)info.GetValue(target), style, options);
+            }
+            else if (type == typeof(Enum))
+            {
+                EditorGUILayout.EnumPopup(info.Name, (Enum)info.GetValue(target), style, options);
+            }
+            else if (type == typeof(Vector3))
+            {
+                EditorGUILayout.Vector3Field(info.Name, (Vector3)info.GetValue(target), options);
+            }
+            else if (type == typeof(Color))
+                EditorGUILayout.ColorField(info.Name, (Color)info.GetValue(target), options);
+            else PropertyField(info, target, options);
         }
         
         /// <summary>
@@ -147,7 +181,7 @@ namespace PurpleFlowerCore.Editor.Tool
             }
             else
             {
-                EditorUI.PropertyField(field, target);
+                UIUtility.PropertyField(field, target);
             }
         }
         

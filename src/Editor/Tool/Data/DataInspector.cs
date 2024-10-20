@@ -100,7 +100,7 @@ namespace PurpleFlowerCore.Editor.Tool
                         EditorGUILayout.LabelField(annotation, EditorStyles.miniLabel);
                     }
                     GUI.enabled = false;
-                    EditorUI.PropertyField(field,monoBehaviour);
+                    UIUtility.PropertyField(field,monoBehaviour);
                     GUI.enabled = true;
                     EditorGUILayout.Space(1);
                 }
