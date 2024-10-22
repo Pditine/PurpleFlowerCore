@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -14,6 +15,21 @@ namespace PurpleFlowerCore.Editor.Tool
         {
             UnityEditor.SceneManagement.EditorSceneManager.OpenScene(scenePath);
         }
+        
+        public static void OpenCSProject()
+        {
+            EditorApplication.ExecuteMenuItem("Assets/Open C# Project");
+        }
+        
+        public static void Refresh()
+        {
+            EditorApplication.ExecuteMenuItem("Assets/Refresh");
+        }
+        
+        public static void ClearConsole()
+        {
+            QuickToolsHotKey.ClearConsole();
+        }
     }
 
     [Serializable]
@@ -22,6 +38,14 @@ namespace PurpleFlowerCore.Editor.Tool
         public string name;
         public bool lineBreak;
         public UnityEvent command;
+
+        // public QuickToolButtonData()
+        // {
+        //     this.name = "指令名称";
+        //     this.lineBreak = false;
+        //     this.command = null;
+        // }
+
     }
 
 }

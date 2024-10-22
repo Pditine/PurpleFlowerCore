@@ -1,4 +1,4 @@
-using LilithGames.Party;
+using System;
 using PurpleFlowerCore.Utility;
 using UnityEditor;
 using UnityEngine;
@@ -34,7 +34,7 @@ namespace PurpleFlowerCore.Editor.Tool
         }
 
         private Vector2 _scrollPosition;
-
+        
         [MenuItem("PFC/Tool/QuickTool", false, 302)]
         public static void CreateWindow()
         {
@@ -50,27 +50,6 @@ namespace PurpleFlowerCore.Editor.Tool
             EditorGUILayout.Space();
             EditorGUILayout.BeginVertical();
             EditorGUILayout.BeginHorizontal();
-
-            if (GUILayout.Button("Open C# Project"))
-            {
-                EditorApplication.ExecuteMenuItem("Assets/Open C# Project");
-            }
-
-            if (GUILayout.Button("Refresh"))
-            {
-                EditorApplication.ExecuteMenuItem("Assets/Refresh");
-            }
-
-            if (GUILayout.Button("Clear Console"))
-            {
-                QuickToolsHotKey.ClearConsole();
-            }
-
-            // if (GUILayout.Button("Open Config File"))
-            // {
-            //     string path = Application.persistentDataPath.Replace("/","\\");
-            //     System.Diagnostics.Process.Start("explorer.exe", path);
-            // }
 
             EditorGUILayout.EndHorizontal();
 
@@ -89,9 +68,10 @@ namespace PurpleFlowerCore.Editor.Tool
             }
             EditorGUILayout.EndHorizontal();
 
+
             _openConfigPanel = EditorGUILayout.Toggle("打开配置面板", _openConfigPanel);
             if(_openConfigPanel)
-                ((UnityEditor.Editor)ConfigPanel).OnInspectorGUI(); // 这里必须要强转，否则会报错
+                ConfigPanel.OnInspectorGUI();
             EditorGUILayout.EndVertical();
             EditorGUILayout.EndScrollView();
         }
