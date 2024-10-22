@@ -61,7 +61,7 @@ namespace PurpleFlowerCore.Utility
             }
 
             graphic.alpha = 0;
-            graphic.enabled = false;
+            // graphic.enabled = false;
             callBack?.Invoke();
         }
         
