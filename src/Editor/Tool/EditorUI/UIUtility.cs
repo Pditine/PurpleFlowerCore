@@ -47,28 +47,42 @@ namespace PurpleFlowerCore.Editor.Tool
 
         public static void ShowField(FieldInfo info, object target, GUIStyle style = null, params GUILayoutOption[] options)
         {
-            style ??= new GUIStyle();
             var type = info.FieldType;
             
             if(type == typeof(int))
             {
-                EditorGUILayout.IntField(info.Name, (int)info.GetValue(target), style, options);
+                info.SetValue(target,
+                    style == null
+                        ? EditorGUILayout.IntField(info.Name, (int)info.GetValue(target), options)
+                        : EditorGUILayout.IntField(info.Name, (int)info.GetValue(target), style, options));
             }
             else if (type == typeof(float))
             {
-                EditorGUILayout.FloatField(info.Name, (float)info.GetValue(target), style, options);
+                info.SetValue(target,
+                    style == null
+                        ? EditorGUILayout.FloatField(info.Name, (float)info.GetValue(target), options)
+                        : EditorGUILayout.FloatField(info.Name, (float)info.GetValue(target), style, options));
             }
             else if (type == typeof(bool))
             {
-                EditorGUILayout.Toggle(info.Name, (bool)info.GetValue(target), options);
+                info.SetValue(target,
+                    style == null
+                        ? EditorGUILayout.Toggle(info.Name, (bool)info.GetValue(target), options)
+                        : EditorGUILayout.Toggle(info.Name, (bool)info.GetValue(target), style, options));
             }
             else if (type == typeof(string))
             {
-                EditorGUILayout.TextField(info.Name, (string)info.GetValue(target), style, options);
+                info.SetValue(target,
+                    style == null
+                        ? EditorGUILayout.TextField(info.Name, (string)info.GetValue(target), options)
+                        : EditorGUILayout.TextField(info.Name, (string)info.GetValue(target), style, options));
             }
             else if (type == typeof(Enum))
             {
-                EditorGUILayout.EnumPopup(info.Name, (Enum)info.GetValue(target), style, options);
+                info.SetValue(target,
+                    style == null
+                        ? EditorGUILayout.EnumPopup(info.Name, (Enum)info.GetValue(target), options)
+                        : EditorGUILayout.EnumPopup(info.Name, (Enum)info.GetValue(target), style, options));
             }
             else if (type == typeof(Vector3))
             {
