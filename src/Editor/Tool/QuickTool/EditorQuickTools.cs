@@ -15,7 +15,7 @@ namespace PurpleFlowerCore.Editor.Tool
             {
                 if (_config == null)
                 {
-                    _config = SOUtility.GetSOByType<QuickToolConfig>();
+                    _config = SOUtility.GetSOByType<QuickToolConfig>(true);
                 }
                 return _config;
             }
@@ -46,34 +46,47 @@ namespace PurpleFlowerCore.Editor.Tool
 
         private void OnGUI()
         {
-            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
-            EditorGUILayout.Space();
-            EditorGUILayout.BeginVertical();
-            EditorGUILayout.BeginHorizontal();
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
-            foreach (var button in Config.quickToolButtonData)
+            try
             {
-                if (button.lineBreak)
+                _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
+                EditorGUILayout.Space();
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.BeginHorizontal();
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.BeginHorizontal();
+                foreach (var button in Config.quickToolButtonData)
                 {
-                    EditorGUILayout.EndHorizontal();
-                    EditorGUILayout.BeginHorizontal();
+                    if (button.lineBreak)
+                    {
+                        EditorGUILayout.EndHorizontal();
+                        EditorGUILayout.BeginHorizontal();
+                    }
+
+                    if (GUILayout.Button(button.name))
+                    {
+                        button.command?.Invoke();
+                    }
                 }
-                if (GUILayout.Button(button.name))
-                {
-                    button.command?.Invoke();
-                }
+
+                EditorGUILayout.EndHorizontal();
+
+
+                _openConfigPanel = EditorGUILayout.Toggle("打开配置面板", _openConfigPanel);
+                if (_openConfigPanel)
+                    ConfigPanel.OnInspectorGUI();
+                EditorGUILayout.EndVertical();
+                EditorGUILayout.EndScrollView();
+            }            
+            catch (Exception e)
+            {
+                EditorGUILayout.EndVertical();
+                EditorGUILayout.EndScrollView();
+                var style = new GUIStyle(EditorStyles.boldLabel) {normal = {textColor = Color.red}};
+                EditorGUILayout.LabelField(e.Message,style);
+                throw;
             }
-            EditorGUILayout.EndHorizontal();
-
-
-            _openConfigPanel = EditorGUILayout.Toggle("打开配置面板", _openConfigPanel);
-            if(_openConfigPanel)
-                ConfigPanel.OnInspectorGUI();
-            EditorGUILayout.EndVertical();
-            EditorGUILayout.EndScrollView();
         }
     }
 
