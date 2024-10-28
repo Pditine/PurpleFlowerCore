@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace PurpleFlowerCore.Utility
+namespace PurpleFlowerCore.Editor
 {
     public static class SOUtility
     {
