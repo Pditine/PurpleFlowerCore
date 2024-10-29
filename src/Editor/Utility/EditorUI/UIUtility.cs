@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace PurpleFlowerCore.Editor.Tool
+namespace PurpleFlowerCore.Editor.Utility
 {
     public static class UIUtility
     {

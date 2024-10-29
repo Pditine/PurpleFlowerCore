@@ -1,6 +1,5 @@
 using System;
-using PurpleFlowerCore.Editor;
-using PurpleFlowerCore.Utility;
+using PurpleFlowerCore.Editor.Utility;
 using UnityEditor;
 using UnityEngine;
 

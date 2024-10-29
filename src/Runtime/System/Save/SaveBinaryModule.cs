@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PurpleFlowerCore.Save
 {
-#if PFC_SAVE_BINARY
+#if PFC_BINARY
     public class SaveBinaryModule
     {
         private byte Key => 231;

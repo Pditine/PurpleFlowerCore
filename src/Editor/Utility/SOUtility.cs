@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace PurpleFlowerCore.Editor
+namespace PurpleFlowerCore.Editor.Utility
 {
     public static class SOUtility
     {

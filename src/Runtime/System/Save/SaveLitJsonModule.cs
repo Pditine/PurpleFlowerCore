@@ -1,4 +1,4 @@
-﻿#if PFC_SAVE_LITJSON
+﻿#if PFC_LITJSON
 using System;
 using System.IO;
 using LitJson;

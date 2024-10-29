@@ -5,7 +5,7 @@ namespace PurpleFlowerCore
 {
     public static class SaveSystem
     {
-#if PFC_SAVE_JSON
+#if PFC_JSON
         private static SaveJsonModule _saveJsonModule;
         private static SaveJsonModule SaveJsonModule
         {
@@ -34,7 +34,7 @@ namespace PurpleFlowerCore
         
 #endif
         
-#if PFC_SAVE_LITJSON
+#if PFC_LITJSON
         private static SaveLitJsonModule _saveJsonModule;
         private static SaveLitJsonModule SaveJsonModule
         {
@@ -62,7 +62,7 @@ namespace PurpleFlowerCore
         }
 #endif
 
-#if PFC_SAVE_BINARY
+#if PFC_BINARY
         private static SaveBinaryModule _saveBinaryModule;
         private static SaveBinaryModule SaveBinaryModule
         {

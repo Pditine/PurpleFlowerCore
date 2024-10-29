@@ -3,7 +3,7 @@ using PurpleFlowerCore.Utility;
 using UnityEditor;
 using UnityEngine;
 
-namespace PurpleFlowerCore.Editor.Tool
+namespace PurpleFlowerCore.Editor.Utility
 {
     [CustomPropertyDrawer(typeof(ROAttribute))]
     public class ReadOnlyDrawer : PropertyDrawer

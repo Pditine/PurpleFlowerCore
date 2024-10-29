@@ -5,7 +5,7 @@ namespace PurpleFlowerCore
     /// <summary>
     /// 请在Scripting Define Symbols中添加PFC_LOG_INFO,PFC_LOG_WARNING,PFC_LOG_ERROR以使用功能
     /// </summary>
-    public class PFCLog : MonoBehaviour
+    public static class PFCLog
     {
         public static void Info(object content)
         {
