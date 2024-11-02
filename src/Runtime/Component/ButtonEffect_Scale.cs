@@ -2,8 +2,9 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Pditine.Component
+namespace PurpleFlowerCore.Component
 {
+    [AddComponentMenu("PFC/ButtonEffect_Scale")]
     public class ButtonEffect_Scale : MonoBehaviour, IPointerEnterHandler,IPointerDownHandler,IPointerExitHandler,IPointerUpHandler
     {
         [SerializeField] private float maxScale = 1.1f;

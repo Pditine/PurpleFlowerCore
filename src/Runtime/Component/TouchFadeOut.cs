@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace PurpleFlowerCore.Component
 {
+    [Obsolete]
     public class TouchFadeOut : MonoBehaviour
     {
         // private float _target = 0;

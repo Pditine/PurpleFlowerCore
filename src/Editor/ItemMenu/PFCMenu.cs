@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
-namespace PurpleFlowerCore.Editor
+namespace PurpleFlowerCore.Editor.ItemMenu
 {
     public static class PFCMenu
     {

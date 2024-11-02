@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 namespace PurpleFlowerCore.Utility
 {
+    [Obsolete]
     public class FixedUpdateUtility : MonoBehaviour
     {
         private float _currentDeltaTime;
