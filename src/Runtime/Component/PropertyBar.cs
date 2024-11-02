@@ -43,13 +43,13 @@ namespace PurpleFlowerCore.Component
             {
                 barMask.transform.position = Vector3.Lerp(center, leftPosition + (leftPosition - rightPosition) / 2, _value);
                 barImage.transform.position = _initImagePosition;
-                _edgePosition = Vector3.Lerp(leftPosition, rightPosition, _value);
+                _edgePosition = Vector3.Lerp(rightPosition, leftPosition, _value);
             }
             else
             {
                 barMask.transform.position = Vector3.Lerp(center, rightPosition + (rightPosition - leftPosition) / 2, _value);
                 barImage.transform.position = _initImagePosition;
-                _edgePosition = Vector3.Lerp(rightPosition, leftPosition, _value);
+                _edgePosition = Vector3.Lerp(leftPosition, rightPosition, _value);
             }
         }
 
