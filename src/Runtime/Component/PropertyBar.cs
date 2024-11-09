@@ -36,10 +36,10 @@ namespace PurpleFlowerCore.Component
         public void SetValue(float value)
         {
             _value = Mathf.Clamp01(value);
-            var leftPosition = barImage.transform.position - barImage.rectTransform.rect.width / 2 * barImage.transform.right;
-            var rightPosition = barImage.transform.position + barImage.rectTransform.rect.width / 2 * barImage.transform.right;
+            var leftPosition = barImage.rectTransform.position - barImage.rectTransform.rect.width / 2 * barImage.rectTransform.right;
+            var rightPosition = barImage.rectTransform.position + barImage.rectTransform.rect.width / 2 * barImage.rectTransform.right;
             var center = (leftPosition + rightPosition) / 2;
-            if (barType == BarType.LeftToRight)
+            if (barType == BarType.RightToLeft)
             {
                 barMask.transform.position = Vector3.Lerp(center, leftPosition + (leftPosition - rightPosition) / 2, _value);
                 barImage.transform.position = _initImagePosition;

@@ -23,9 +23,6 @@ namespace PurpleFlowerCore.Editor.Setting
                 if(_style == null)
                 {
                     _style = new GUIStyle();
-                    // _style.fontSize = 20;
-                    // _style.alignment = TextAnchor.MiddleCenter;
-                    // _style.fixedWidth = 800;
                     _style.normal.textColor = Color.white;
                     _style.wordWrap = true;
                 }
