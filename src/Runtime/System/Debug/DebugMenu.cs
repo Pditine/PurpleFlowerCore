@@ -25,8 +25,10 @@ namespace PurpleFlowerCore
     }
     public class DebugMenu : MonoBehaviour, IDragHandler
     {
+        //todo:UI框架
         [SerializeField] private GameObject menu;
         [SerializeField] private Transform itemRoot;
+        
         private readonly Dictionary<string,DebugCommandInfo> _menuCommands = new();
         private readonly List<DebugMenuItem> _items = new();
         [Inspectable][SerializeField]private List<string> _currentPath = new(){"root"};
@@ -36,6 +38,7 @@ namespace PurpleFlowerCore
         
         public void AddCommand(string commandName, Action command)
         {
+            
             _menuCommands.Add(commandName, new DebugCommandInfo(commandName, command));
         }
         
