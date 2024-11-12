@@ -8,6 +8,7 @@ namespace PurpleFlowerCore.Editor.Setting
         public bool LogInfo = true;
         public bool LogWarning = true;
         public bool LogError = true;
+        public bool DebugMode = true;
         public SaveMode SaveMode;
     }
 

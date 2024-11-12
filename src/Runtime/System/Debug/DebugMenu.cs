@@ -1,70 +1,43 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.SymbolStore;
-using PurpleFlowerCore.Utility;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace PurpleFlowerCore
 {
-    public class DebugCommandInfo
-    {
-        private const string rootPath = "root";
-        public string[] Path;
-        public Action Command;
-        private string _path;
-        
-        public DebugCommandInfo(string path, Action command)
-        {
-            path = rootPath + "/" + path;
-            Path = path.Split('/');
-            Command = command;
-        }
-        
-    }
     public class DebugMenu : MonoBehaviour, IDragHandler
     {
         //todo:UI框架
         [SerializeField] private GameObject menu;
         [SerializeField] private Transform itemRoot;
+        [SerializeField] private LogPanel logPanel;
         
-        private readonly Dictionary<string,DebugCommandInfo> _menuCommands = new();
+        private readonly Tree<Action> _commandTree = new();
+        // private readonly Dictionary<string,DebugCommandInfo> _menuCommands = new();
         private readonly List<DebugMenuItem> _items = new();
-        [Inspectable][SerializeField]private List<string> _currentPath = new(){"root"};
-        [Inspectable]private int _currentPathIndex = 0;
+        private TreeNode<Action> _currentNode;
+        // [Inspectable]private int _currentPathIndex = 0;
         private const string ItemUIPath = "PFCRes/DebugMenuItem";
-        private HashSet<string> _itemNameBuffer = new();
         
-        public void AddCommand(string commandName, Action command)
+        public void AddCommand(string commandPath, Action command)
         {
-            
-            _menuCommands.Add(commandName, new DebugCommandInfo(commandName, command));
-        }
-        
-        public void RemoveCommand(string commandName)
-        {
-            _menuCommands.Remove(commandName);
-        }
-        
-        public void ExecuteCommand(string commandName)
-        {
-            if (_menuCommands.ContainsKey(commandName))
-            {
-                _menuCommands[commandName].Command?.Invoke();
-            }
+            _commandTree.CreateNodeByPath(commandPath, command);
         }
 
-        public void ClickItem(string itemName)
+        private void Awake()
         {
-            _currentPathIndex++;
-            if(_menuCommands[itemName].Path.Length <= _currentPathIndex)
+            _currentNode = _commandTree.Root;
+        }
+
+        public void ClickItem(TreeNode<Action> commandNode)
+        {
+            if (commandNode.IsLeaf)
             {
-                _currentPathIndex = _menuCommands[itemName].Path.Length;
-                ExecuteCommand(itemName);
-            }else
+                commandNode.Value?.Invoke();
+            }
+            else
             {
-                _currentPath.Add(_menuCommands[itemName].Path[_currentPathIndex]);
+                _currentNode = commandNode;
                 Refresh();
             }
         }
@@ -80,53 +53,54 @@ namespace PurpleFlowerCore
         
         public void Back()
         {
-            if (_currentPathIndex == 0) return;
-            _currentPathIndex--;
-            _currentPath.RemoveAt(_currentPathIndex);
+            if (_currentNode.IsRoot) return;
+            _currentNode = _currentNode.Parent;
             Refresh();
         }
         
-        private void ShowItem(string itemName)
+        private void ShowItem(TreeNode<Action> commandNode)
         {
             var newItem = Instantiate(Resources.Load<DebugMenuItem>(ItemUIPath), itemRoot);
             _items.Add(newItem);
-            newItem.Init(_menuCommands[itemName]);
+            newItem.Init(commandNode, this);
         }
 
         private void ShowItems()
         {
-            foreach (var command in _menuCommands)
+            foreach (var node in _currentNode.Children)
             {
-                bool isCurrentPath = true;
-                for (int i = 0; i <= _currentPathIndex; i++)
-                {
-                    if (command.Value.Path[i] == _currentPath[i]) continue;
-                    isCurrentPath = false;
-                    break;
-                }
-                if(isCurrentPath)
-                {
-                    ShowItem(command.Key);
-                    _itemNameBuffer.Add(command.Key);
-                }
+                ShowItem(node);
             }
         }
-
+        
         public void Switch()
         {
-            menu.SetActive(!menu.activeSelf);           
+            Switch(!menu.activeSelf);
+        }
+
+        public void Switch(bool open)
+        {
+            menu.SetActive(open);
+            if (open)
+            {
+                Refresh();
+            }
         }
         
         public void Refresh()
         {
-            _itemNameBuffer.Clear();
             ClearItems();
             ShowItems();
+        }
+        
+        public void Print(string str)
+        {
+            logPanel.Print(str);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            transform.position = Input.mousePosition;
+            transform.position += (Vector3)eventData.delta;
         }
     }
 }

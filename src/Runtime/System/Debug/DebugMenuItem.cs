@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,10 +10,12 @@ namespace PurpleFlowerCore
         [SerializeField] private Text commandName;
         [SerializeField] private Button commandButton;
         
-        public void Init(DebugCommandInfo commandInfo)
+        public void Init(TreeNode<Action> commandNode, DebugMenu debugMenu)
         {
-            commandName.text = commandInfo.Path.Last();
-            // commandButton.onClick.AddListener();    
+            commandButton.onClick.RemoveAllListeners();
+            var text = commandNode.IsLeaf? commandNode.name: commandNode.name + ">" ;
+            commandName.text = text;
+            commandButton.onClick.AddListener(() => debugMenu.ClickItem(commandNode));
         }
     }
 }

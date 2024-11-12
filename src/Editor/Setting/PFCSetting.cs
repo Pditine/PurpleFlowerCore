@@ -27,6 +27,7 @@ namespace PurpleFlowerCore.Editor.Setting
             data.LogInfo = EditorGUILayout.Toggle("使用LogInfo", data.LogInfo);
             data.LogWarning = EditorGUILayout.Toggle("使用LogWarning", data.LogWarning);
             data.LogError = EditorGUILayout.Toggle("使用LogError", data.LogError);
+            data.DebugMode = EditorGUILayout.Toggle("使用运行时Debug菜单", data.DebugMode);
             
             if (GUILayout.Button("应用"))
                 Apply();
@@ -70,13 +71,17 @@ namespace PurpleFlowerCore.Editor.Setting
             {
                 PFCEditorUtility.AddScriptCompilationSymbol(PFCSettingOption.NOT_PFC_LOG_ERROR);
             }
+            if (data.DebugMode)
+            {
+                PFCEditorUtility.AddScriptCompilationSymbol(PFCSettingOption.PRC_DEBUGMENU);
+            }
         }
     }
     
     public enum PFCSettingOption
     {
         PFC_JSON,PFC_LITJSON,PFC_BINARY,
-        NOT_PFC_LOG_INFO,NOT_PFC_LOG_WARNING,NOT_PFC_LOG_ERROR,
+        NOT_PFC_LOG_INFO,NOT_PFC_LOG_WARNING,NOT_PFC_LOG_ERROR,PRC_DEBUGMENU
         
     }
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace PurpleFlowerCore.Base
 {
@@ -20,6 +21,25 @@ namespace PurpleFlowerCore.Base
                 _instance = pfcGameObject.AddComponent<PFCManager>();
                 DontDestroyOnLoad(pfcGameObject);
                 return _instance;
+            }
+        }
+
+        private static Canvas _canvas;
+        public static Canvas Canvas
+        {
+            get
+            {
+                if (_canvas is not null) return _canvas;
+                GameObject canvasGameObject = new GameObject
+                {
+                    name = "Canvas"
+                };
+                _canvas = canvasGameObject.AddComponent<Canvas>();
+                _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                canvasGameObject.AddComponent<CanvasScaler>();
+                canvasGameObject.AddComponent<GraphicRaycaster>();
+                canvasGameObject.transform.parent = Instance.transform;
+                return _canvas;
             }
         }
         
