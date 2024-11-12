@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace PurpleFlowerCore
+namespace PurpleFlowerCore.PFCDebug
 {
     public class DebugMenu : MonoBehaviour, IDragHandler
     {
@@ -93,9 +93,9 @@ namespace PurpleFlowerCore
             ShowItems();
         }
         
-        public void Print(string str)
+        public void Log(LogData data)
         {
-            logPanel.Print(str);
+            logPanel.Print(data);
         }
 
         public void OnDrag(PointerEventData eventData)

@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PurpleFlowerCore
+namespace PurpleFlowerCore.PFCDebug
 {
     public class DebugMenuItem : MonoBehaviour
     {

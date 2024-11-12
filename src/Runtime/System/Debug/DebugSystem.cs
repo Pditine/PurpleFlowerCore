@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using PurpleFlowerCore.Base;
-
+using PurpleFlowerCore.PFCDebug;
 namespace PurpleFlowerCore
 {
     /// <summary>
@@ -17,16 +17,18 @@ namespace PurpleFlowerCore
             {
                 if (_debugMenu is not null) return _debugMenu;
                 DebugMenu root = GameObject.Instantiate(Resources.Load<DebugMenu>("PFCRes/DebugMenu"), PFCManager.Canvas.transform);
+                root.gameObject.SetActive(false);
                 _debugMenu = root;
                 return _debugMenu;
             }
         }
-#if PRC_DEBUGMENU
+#if PFC_DEBUGMENU
         
         [RuntimeInitializeOnLoadMethod]
         private static void OnGameStart()
         {
             MonoSystem.AddUpdateListener(DebugMenuOpen);
+            
         }
 
         private static void DebugMenuOpen()
@@ -41,17 +43,44 @@ namespace PurpleFlowerCore
 
         public static void AddCommand(string commandName, Action command)
         {
+#if PFC_DEBUGMENU
             DebugMenu.AddCommand(commandName, command);
+#endif
         }
         
-        public static void Log(PFCLog.LogLevel level,string info)
+        // public static void Log(LogLevel level,string channel,string content)
+        // {
+        //     DebugMenu.Log(new LogData()
+        //     {
+        //         Level = level,
+        //         Channel = channel,
+        //         Content = content
+        //     });
+        // }
+
+        /// <summary>
+        /// 在Debug菜单中打印一行日志,建议业务中使用PFCLog代替
+        /// </summary>
+        /// <param name="data"></param>
+        public static void Log(LogData data)
         {
-            DebugMenu.Print(info);
+            DebugMenu.Log(data);
         }
-        
         // public static void ClickItem(TreeNode<Action> commandNode)
         // {
         //     DebugMenu.ClickItem(commandNode);
         // }
+        
+        public static Color GetLogLevelColor(LogLevel level)
+        {
+            return level switch
+            {
+                LogLevel.Debug => Color.green,
+                LogLevel.Info => Color.cyan,
+                LogLevel.Warning => Color.yellow,
+                LogLevel.Error => Color.red,
+                _ => Color.white
+            };
+        }
     }
 }

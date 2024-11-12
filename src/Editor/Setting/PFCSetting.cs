@@ -18,7 +18,7 @@ namespace PurpleFlowerCore.Editor.Setting
             win.maxSize = new Vector2(800, 600);
             win.minSize = win.maxSize;
         }
-        
+
         public void OnGUI()
         {
             //GUI.DrawTexture(new Rect(600,400,200,200),Resources.Load<Texture>("PFCRes/logo-a0"));
@@ -73,7 +73,7 @@ namespace PurpleFlowerCore.Editor.Setting
             }
             if (data.DebugMode)
             {
-                PFCEditorUtility.AddScriptCompilationSymbol(PFCSettingOption.PRC_DEBUGMENU);
+                PFCEditorUtility.AddScriptCompilationSymbol(PFCSettingOption.PFC_DEBUGMENU);
             }
         }
     }
@@ -81,7 +81,7 @@ namespace PurpleFlowerCore.Editor.Setting
     public enum PFCSettingOption
     {
         PFC_JSON,PFC_LITJSON,PFC_BINARY,
-        NOT_PFC_LOG_INFO,NOT_PFC_LOG_WARNING,NOT_PFC_LOG_ERROR,PRC_DEBUGMENU
+        NOT_PFC_LOG_INFO,NOT_PFC_LOG_WARNING,NOT_PFC_LOG_ERROR,PFC_DEBUGMENU
         
     }
 }
