@@ -54,8 +54,8 @@ namespace PurpleFlowerCore
             var content = $"<color=#{ColorUtility.ToHtmlStringRGB(_data.Color)}>{_data.Content}</color>";
 
             var sb = new StringBuilder();
-            sb.Append(prefix);
             sb.Append(time);
+            sb.Append(prefix);
             sb.Append(channel);
             sb.Append(content);
 
