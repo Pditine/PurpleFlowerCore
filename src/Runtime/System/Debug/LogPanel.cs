@@ -11,11 +11,12 @@ namespace PurpleFlowerCore.PFCDebug
         [SerializeField]private ScrollRect scrollRect;
         private HashSet<LogInfo> _logInfos = new();
         [SerializeField] private List<DebugLevelButton> levelButtons = new();
+        [SerializeField] private Prompt prompt;
         
         public void Print(LogData data)
         {
             LogInfo logInfo = Instantiate(Resources.Load<LogInfo>(LogInfoPath), scrollRect.content);
-            logInfo.Init(data);
+            logInfo.Init(data, prompt);
             _logInfos.Add(logInfo);
             scrollRect.normalizedPosition = new Vector2(0, 0);
         }

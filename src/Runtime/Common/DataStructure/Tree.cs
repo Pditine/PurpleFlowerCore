@@ -22,7 +22,7 @@ namespace PurpleFlowerCore
 
         public void CreateNodeByPath(string path, T data)
         {
-            path = Root.name + path.Trim('/');
+            path = Root.name + '/' + path.Trim('/');
             CreateNodeByPath(path.Split('/'), data);
         }
         
@@ -33,7 +33,7 @@ namespace PurpleFlowerCore
         
         public TreeNode<T> GetNode(string path)
         {
-            path = Root.name + path.Trim('/');
+            path = Root.name+ '/' + path.Trim('/');
             return GetNode(path.Split('/'));
         }
         
@@ -67,7 +67,7 @@ namespace PurpleFlowerCore
         public string name;
         private string[] path;
         public string[] Path => path[1..];
-        [FormerlySerializedAs("data")] public T Value;
+        public T Value;
         public TreeNode<T> Parent;
         public List<TreeNode<T>> Children;
         public bool IsLeaf => Children.Count == 0;

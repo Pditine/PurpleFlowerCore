@@ -33,6 +33,7 @@ namespace PurpleFlowerCore.PFCDebug
         {
             if (commandNode.IsLeaf)
             {
+                PFCLog.Debug("DebugMenu", "execute command:" + commandNode.name);
                 commandNode.Value?.Invoke();
             }
             else

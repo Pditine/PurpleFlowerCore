@@ -1,13 +1,18 @@
 using System.Text;
+using PurpleFlowerCore.PFCDebug;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections;
+using PurpleFlowerCore.Utility;
 
 namespace PurpleFlowerCore
 {
-    //todo: 显示调用栈
-    public class LogInfo : MonoBehaviour
+    public class LogInfo : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private Text text;
+        [SerializeField] private Image background;
+        private Prompt _prompt;
 
         private LogData _data;
 
@@ -29,12 +34,13 @@ namespace PurpleFlowerCore
         // private string _time;
         // public string Time => _time;
 
-        public void Init(LogData data)
+        public void Init(LogData data, Prompt prompt)
         {
             // _channel = data.Content;
             // _channel = data.Channel;
             // _level = data.Level;
             // _time = data.Time;
+            _prompt = prompt;
             _data = data;
             SetText();
         }
@@ -57,5 +63,11 @@ namespace PurpleFlowerCore
             text.rectTransform.sizeDelta = new Vector2(text.rectTransform.sizeDelta.x, text.preferredHeight);
         }
 
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            FadeUtility.FadeOut(background,100);
+            if(_prompt == null || _data.StackFrames == null || _data.StackFrames.Length == 0) return;
+            _prompt.ShowStackTrace(_data.StackFrames);
+        }
     }
 }
