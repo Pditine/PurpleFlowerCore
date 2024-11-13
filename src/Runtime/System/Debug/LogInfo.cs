@@ -25,21 +25,9 @@ namespace PurpleFlowerCore
             }
             get => _data;
         }
-        // private string _channel;
-        // public string Channel => _channel;
-        // private LogLevel _level;
-        // public LogLevel Level => _level;
-        // private string _content;
-        // public string Content => _content;
-        // private string _time;
-        // public string Time => _time;
 
         public void Init(LogData data, Prompt prompt)
         {
-            // _channel = data.Content;
-            // _channel = data.Channel;
-            // _level = data.Level;
-            // _time = data.Time;
             _prompt = prompt;
             _data = data;
             SetText();
@@ -50,7 +38,7 @@ namespace PurpleFlowerCore
             var prefixColor = DebugSystem.GetLogLevelColor(_data.Level);
             var prefix = $"<color=#{ColorUtility.ToHtmlStringRGB(prefixColor)}>[{_data.Level}]</color>";
             var channel = _data.Channel == null ? "" : $"[{_data.Channel}]";
-            var time = _data.Time == null ? "" : $"[{_data.Time}]";
+            var time = _data.Time == null ? "" : $"[<size=20>{_data.Time}]</size>";
             var content = $"<color=#{ColorUtility.ToHtmlStringRGB(_data.Color)}>{_data.Content}</color>";
 
             var sb = new StringBuilder();
