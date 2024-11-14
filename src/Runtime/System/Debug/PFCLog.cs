@@ -21,6 +21,7 @@ namespace PurpleFlowerCore
         public Color Color;
         public StackFrame[] StackFrames;
     }
+    
     public static class PFCLog
     {
         public static void Print(LogLevel level,Color color, string channel, object content)
@@ -56,7 +57,8 @@ namespace PurpleFlowerCore
                     UnityEngine.Debug.Log(fullContent);
                     break;
             }
-#if PFC_DEBUGMENU
+            //todo:临时处理
+#if PFC_DEBUGMENU && !UNITY_EDITOR
             StackTrace stackTrace = new StackTrace();
             StackFrame[] stackFrames = stackTrace.GetFrames()?[2..];
             var logData = new LogData
