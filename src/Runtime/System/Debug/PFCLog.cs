@@ -57,20 +57,22 @@ namespace PurpleFlowerCore
                     UnityEngine.Debug.Log(fullContent);
                     break;
             }
-            //todo:临时处理
-#if PFC_DEBUGMENU && !UNITY_EDITOR
-            StackTrace stackTrace = new StackTrace();
-            StackFrame[] stackFrames = stackTrace.GetFrames()?[2..];
-            var logData = new LogData
+#if PFC_DEBUGMENU
+            if(Application.isPlaying)
             {
-                Level = level,
-                Channel = channel,
-                Content = content.ToString(),
-                Time = System.DateTime.Now.ToString("HH:mm:ss"),
-                Color = color,
-                StackFrames = stackFrames
-            };
-            DebugSystem.Log(logData);
+                StackTrace stackTrace = new StackTrace();
+                StackFrame[] stackFrames = stackTrace.GetFrames()?[2..];
+                var logData = new LogData
+                {
+                    Level = level,
+                    Channel = channel,
+                    Content = content.ToString(),
+                    Time = System.DateTime.Now.ToString("HH:mm:ss"),
+                    Color = color,
+                    StackFrames = stackFrames
+                };
+                DebugSystem.Log(logData);
+            }
 #endif
         }
         
