@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Serialization;
@@ -59,6 +60,44 @@ namespace PurpleFlowerCore
                 node.Parent.RemoveChild(node);
             }
         }
+
+        public List<TreeNode<T>> GetNodes()
+        {
+            throw new NotImplementedException();
+        }
+        
+        public List<TreeNode<T>> GetLeaves()
+        {
+            var leaves = new List<TreeNode<T>>();
+            var queue = new Queue<TreeNode<T>>();
+            queue.Enqueue(Root);
+            while (queue.Count > 0)
+            {
+                var node = queue.Dequeue();
+                if (node.IsLeaf)
+                {
+                    leaves.Add(node);
+                }
+                else
+                {
+                    foreach (var child in node.Children)
+                    {
+                        queue.Enqueue(child);
+                    }
+                }
+            }
+            return leaves;
+        }
+
+        // public IEnumerator<TreeNode<T>> GetEnumerator()
+        // {
+        //     throw new NotImplementedException();
+        // }
+        //
+        // IEnumerator IEnumerable.GetEnumerator()
+        // {
+        //     return GetEnumerator();
+        // }
     }
     
     [Serializable]

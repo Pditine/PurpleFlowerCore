@@ -5,23 +5,46 @@ using UnityEngine.EventSystems;
 
 namespace PurpleFlowerCore.PFCDebug
 {
+    
+
     public class DebugMenu : MonoBehaviour, IDragHandler
     {
         //todo:UI框架
         [SerializeField] private GameObject menu;
         [SerializeField] private Transform itemRoot;
         [SerializeField] private LogPanel logPanel;
+        [SerializeField] private DebugInput debugInput;
         
-        private readonly Tree<Action> _commandTree = new();
+        private readonly Tree<ICommand> _commandTree = new();
         // private readonly Dictionary<string,DebugCommandInfo> _menuCommands = new();
         private readonly List<DebugMenuItem> _items = new();
-        private TreeNode<Action> _currentNode;
+        private TreeNode<ICommand> _currentNode;
         // [Inspectable]private int _currentPathIndex = 0;
         private const string ItemUIPath = "PFCRes/DebugMenuItem";
         
         public void AddCommand(string commandPath, Action command)
         {
-            _commandTree.CreateNodeByPath(commandPath, command);
+            _commandTree.CreateNodeByPath(commandPath, new CommandInfo(command));
+        }
+        
+        public void AddCommand(string commandPath, Action<int> command)
+        {
+            _commandTree.CreateNodeByPath(commandPath, new CommandInfo_Int(command));
+        }
+        
+        public void AddCommand(string commandPath, Action<float> command)
+        {
+            _commandTree.CreateNodeByPath(commandPath, new CommandInfo_Float(command));
+        }
+        
+        public void AddCommand(string commandPath, Action<string> command)
+        {
+            _commandTree.CreateNodeByPath(commandPath, new CommandInfo_String(command));
+        }
+
+        public void AddCommand(string commandPath, Action<bool> command)
+        {
+            _commandTree.CreateNodeByPath(commandPath, new CommandInfo_Bool(command));
         }
 
         private void Awake()
@@ -29,18 +52,55 @@ namespace PurpleFlowerCore.PFCDebug
             _currentNode = _commandTree.Root;
         }
 
-        public void ClickItem(TreeNode<Action> commandNode)
+        public void ClickItem(TreeNode<ICommand> commandNode)
         {
             if (commandNode.IsLeaf)
             {
-                PFCLog.Debug("DebugMenu", "execute command:" + commandNode.name);
-                commandNode.Value?.Invoke();
+                if(commandNode.Value.ParamType == null)
+                {
+                    PFCLog.Debug("DebugMenu", "execute command:" + commandNode.name);
+                    commandNode.Value?.Invoke(null);
+                }
+                else
+                {
+                    debugInput.Show(commandNode);
+                }
             }
             else
             {
                 _currentNode = commandNode;
                 Refresh();
             }
+        }
+
+        public void Input(string input)
+        {
+            if(string.IsNullOrEmpty(input)) return;
+            string[] inputs = input.Split(' ');
+            var commands = _commandTree.GetLeaves();
+            foreach (var command in commands)
+            {
+                if (command.name != inputs[0]) continue;
+                if(command.Value.ParamType != null)
+                {
+                    if(inputs.Length > 1)
+                    {
+                        command.Value.Invoke(inputs[1]);
+                        PFCLog.Debug("DebugMenu", "execute command:" + command.name + ' ' + inputs[1]);
+                    }
+                    else
+                    {
+                        PFCLog.Error("DebugMenu","command:"+command.name+" need a param");
+                    }
+                }
+                else
+                {
+                    command.Value.Invoke(null);
+                    PFCLog.Debug("DebugMenu", "execute command:" + command.name);
+                }
+                return;
+            }
+            PFCLog.Debug(input);
         }
 
         private void ClearItems()
@@ -59,7 +119,7 @@ namespace PurpleFlowerCore.PFCDebug
             Refresh();
         }
         
-        private void ShowItem(TreeNode<Action> commandNode)
+        private void ShowItem(TreeNode<ICommand> commandNode)
         {
             var newItem = Instantiate(Resources.Load<DebugMenuItem>(ItemUIPath), itemRoot);
             _items.Add(newItem);

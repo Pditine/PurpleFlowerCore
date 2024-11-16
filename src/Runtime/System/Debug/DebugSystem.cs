@@ -40,24 +40,6 @@ namespace PurpleFlowerCore
             DebugMenu.Switch(_isDebugMenuOpen);
         }
 #endif
-
-        public static void AddCommand(string commandName, Action command)
-        {
-#if PFC_DEBUGMENU
-            DebugMenu.AddCommand(commandName, command);
-#endif
-        }
-        
-        // public static void Log(LogLevel level,string channel,string content)
-        // {
-        //     DebugMenu.Log(new LogData()
-        //     {
-        //         Level = level,
-        //         Channel = channel,
-        //         Content = content
-        //     });
-        // }
-
         /// <summary>
         /// 在Debug菜单中打印一行日志,建议业务中使用PFCLog代替
         /// </summary>
@@ -66,11 +48,42 @@ namespace PurpleFlowerCore
         {
             DebugMenu.Log(data);
         }
-        // public static void ClickItem(TreeNode<Action> commandNode)
-        // {
-        //     DebugMenu.ClickItem(commandNode);
-        // }
         
+        public static void AddCommand(string commandName, Action command)
+        {
+#if PFC_DEBUGMENU
+            DebugMenu.AddCommand(commandName, command);
+#endif
+        }
+
+        public static void AddCommand(string commandName, Action<int> command)
+        {
+#if PFC_DEBUGMENU
+            DebugMenu.AddCommand(commandName, command);
+#endif
+        }
+        
+        public static void AddCommand(string commandName, Action<float> command)
+        {
+#if PFC_DEBUGMENU
+            DebugMenu.AddCommand(commandName, command);
+#endif
+        }
+        
+        public static void AddCommand(string commandName, Action<string> command)
+        {
+#if PFC_DEBUGMENU
+            DebugMenu.AddCommand(commandName, command);
+#endif
+        }
+        
+        public static void AddCommand(string commandName, Action<bool> command)
+        {
+#if PFC_DEBUGMENU
+            DebugMenu.AddCommand(commandName, command);
+#endif
+        }
+
         public static Color GetLogLevelColor(LogLevel level)
         {
             return level switch
