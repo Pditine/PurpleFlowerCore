@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using PurpleFlowerCore.Base;
 using PurpleFlowerCore.PFCDebug;
+
 namespace PurpleFlowerCore
 {
     /// <summary>
@@ -56,33 +57,20 @@ namespace PurpleFlowerCore
 #endif
         }
 
-        public static void AddCommand(string commandName, Action<int> command)
+        public static void AddCommand<T>(string commandName, Action<T> command)
         {
 #if PFC_DEBUGMENU
             DebugMenu.AddCommand(commandName, command);
 #endif
         }
-        
-        public static void AddCommand(string commandName, Action<float> command)
+
+        public static void AddCommand(string commandName, Action<object> command, Type type)
         {
 #if PFC_DEBUGMENU
-            DebugMenu.AddCommand(commandName, command);
+            DebugMenu.AddCommand(commandName, command, type);
 #endif
         }
-        
-        public static void AddCommand(string commandName, Action<string> command)
-        {
-#if PFC_DEBUGMENU
-            DebugMenu.AddCommand(commandName, command);
-#endif
-        }
-        
-        public static void AddCommand(string commandName, Action<bool> command)
-        {
-#if PFC_DEBUGMENU
-            DebugMenu.AddCommand(commandName, command);
-#endif
-        }
+
 
         public static Color GetLogLevelColor(LogLevel level)
         {

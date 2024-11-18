@@ -15,44 +15,34 @@ namespace PurpleFlowerCore.PFCDebug
         [SerializeField] private LogPanel logPanel;
         [SerializeField] private DebugInput debugInput;
         
-        private readonly Tree<ICommand> _commandTree = new();
+        private readonly Tree<CommandBase> _commandTree = new();
         // private readonly Dictionary<string,DebugCommandInfo> _menuCommands = new();
         private readonly List<DebugMenuItem> _items = new();
-        private TreeNode<ICommand> _currentNode;
+        private TreeNode<CommandBase> _currentNode;
         // [Inspectable]private int _currentPathIndex = 0;
         private const string ItemUIPath = "PFCRes/DebugMenuItem";
         
         public void AddCommand(string commandPath, Action command)
         {
-            _commandTree.CreateNodeByPath(commandPath, new CommandInfo(command));
+            _commandTree.CreateNodeByPath(commandPath, CommandFactory.CreateCommand(command));
         }
         
-        public void AddCommand(string commandPath, Action<int> command)
+        public void AddCommand<T>(string commandPath, Action<T> command)
         {
-            _commandTree.CreateNodeByPath(commandPath, new CommandInfo_Int(command));
+            _commandTree.CreateNodeByPath(commandPath, CommandFactory.CreateCommand(command));
         }
         
-        public void AddCommand(string commandPath, Action<float> command)
+        public void AddCommand(string commandPath, Action<object> command, Type type)
         {
-            _commandTree.CreateNodeByPath(commandPath, new CommandInfo_Float(command));
+            _commandTree.CreateNodeByPath(commandPath, CommandFactory.CreateCommand(command));
         }
         
-        public void AddCommand(string commandPath, Action<string> command)
-        {
-            _commandTree.CreateNodeByPath(commandPath, new CommandInfo_String(command));
-        }
-
-        public void AddCommand(string commandPath, Action<bool> command)
-        {
-            _commandTree.CreateNodeByPath(commandPath, new CommandInfo_Bool(command));
-        }
-
         private void Awake()
         {
             _currentNode = _commandTree.Root;
         }
 
-        public void ClickItem(TreeNode<ICommand> commandNode)
+        public void ClickItem(TreeNode<CommandBase> commandNode)
         {
             if (commandNode.IsLeaf)
             {
@@ -85,8 +75,8 @@ namespace PurpleFlowerCore.PFCDebug
                 {
                     if(inputs.Length > 1)
                     {
-                        command.Value.Invoke(inputs[1]);
                         PFCLog.Debug("DebugMenu", "execute command:" + command.name + ' ' + inputs[1]);
+                        command.Value.Invoke(inputs[1]);
                     }
                     else
                     {
@@ -119,7 +109,7 @@ namespace PurpleFlowerCore.PFCDebug
             Refresh();
         }
         
-        private void ShowItem(TreeNode<ICommand> commandNode)
+        private void ShowItem(TreeNode<CommandBase> commandNode)
         {
             var newItem = Instantiate(Resources.Load<DebugMenuItem>(ItemUIPath), itemRoot);
             _items.Add(newItem);

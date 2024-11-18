@@ -18,7 +18,7 @@ namespace PurpleFlowerCore.PFCDebug
             
         }
         
-        public void Show(TreeNode<ICommand> commandNode)
+        public void Show(TreeNode<CommandBase> commandNode)
         {
             inputField.text = commandNode.name + " ";
             inputField.Select();

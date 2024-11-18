@@ -10,7 +10,7 @@ namespace PurpleFlowerCore.PFCDebug
         [SerializeField] private Text commandName;
         [SerializeField] private Button commandButton;
         
-        public void Init(TreeNode<ICommand> commandNode, DebugMenu debugMenu)
+        public void Init(TreeNode<CommandBase> commandNode, DebugMenu debugMenu)
         {
             commandButton.onClick.RemoveAllListeners();
             string text = commandNode.name;
