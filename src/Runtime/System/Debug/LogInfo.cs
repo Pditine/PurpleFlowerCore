@@ -35,20 +35,35 @@ namespace PurpleFlowerCore
         
         private void SetText()
         {
+            // var prefixColor = DebugSystem.GetLogLevelColor(_data.Level);
+            // var prefix = $"<color=#{ColorUtility.ToHtmlStringRGB(prefixColor)}>[{_data.Level}]</color>";
+            // var channel = _data.Channel == null ? "" : $"[{_data.Channel}]";
+            // var time = _data.Time == null ? "" : $"[<size=20>{_data.Time}]</size>";
+            // var content = $"<color=#{ColorUtility.ToHtmlStringRGB(_data.Color)}>{_data.Content}</color>";
+            //
+            // var sb = new StringBuilder();
+            // sb.Append(time);
+            // sb.Append(prefix);
+            // sb.Append(channel);
+            // sb.Append(content);
+
+            text.text = Format();
+            text.rectTransform.sizeDelta = new Vector2(text.rectTransform.sizeDelta.x, text.preferredHeight);
+        }
+
+        public string Format()
+        {
             var prefixColor = DebugSystem.GetLogLevelColor(_data.Level);
             var prefix = $"<color=#{ColorUtility.ToHtmlStringRGB(prefixColor)}>[{_data.Level}]</color>";
             var channel = _data.Channel == null ? "" : $"[{_data.Channel}]";
-            var time = _data.Time == null ? "" : $"[<size=20>{_data.Time}]</size>";
+            var time = _data.Time == null ? "" : $"[<size=20>{_data.Time}</size>]";
             var content = $"<color=#{ColorUtility.ToHtmlStringRGB(_data.Color)}>{_data.Content}</color>";
-
             var sb = new StringBuilder();
             sb.Append(time);
             sb.Append(prefix);
             sb.Append(channel);
             sb.Append(content);
-
-            text.text = sb.ToString();
-            text.rectTransform.sizeDelta = new Vector2(text.rectTransform.sizeDelta.x, text.preferredHeight);
+            return sb.ToString();
         }
 
         public void OnPointerClick(PointerEventData eventData)

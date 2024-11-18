@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,6 +59,19 @@ namespace PurpleFlowerCore.PFCDebug
             {
                 button.SetOpen(true);
             }
+        }
+
+        public void Export()
+        {
+            StringBuilder log = new();
+            foreach (var logInfo in _logInfos)
+            {
+                log.AppendLine(logInfo.Format());
+            }
+            //todo: 存档系统封装
+            if(!Directory.Exists(Application.persistentDataPath + "/log"))
+                Directory.CreateDirectory(Application.persistentDataPath + "/log");
+            File.WriteAllText(Application.persistentDataPath + "/log/log.txt",log.ToString());
         }
     }
 }
