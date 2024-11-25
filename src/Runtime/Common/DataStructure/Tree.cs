@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 namespace PurpleFlowerCore
 {
     [Serializable]
-    public class Tree<T>
+    public class Tree<T> : IEnumerable<TreeNode<T>>
     {
         public TreeNode<T> Root;
         
@@ -63,7 +63,19 @@ namespace PurpleFlowerCore
 
         public List<TreeNode<T>> GetNodes()
         {
-            throw new NotImplementedException();
+            var nodes = new List<TreeNode<T>>();
+            var queue = new Queue<TreeNode<T>>();
+            queue.Enqueue(Root);
+            while (queue.Count > 0)
+            {
+                var node = queue.Dequeue();
+                nodes.Add(node);
+                foreach (var child in node.Children)
+                {
+                    queue.Enqueue(child);
+                }
+            }
+            return nodes;
         }
         
         public List<TreeNode<T>> GetLeaves()
@@ -89,15 +101,19 @@ namespace PurpleFlowerCore
             return leaves;
         }
 
-        // public IEnumerator<TreeNode<T>> GetEnumerator()
-        // {
-        //     throw new NotImplementedException();
-        // }
-        //
-        // IEnumerator IEnumerable.GetEnumerator()
-        // {
-        //     return GetEnumerator();
-        // }
+        public IEnumerator<TreeNode<T>> GetEnumerator()
+        {
+            var nodes = GetNodes();
+            foreach (var node in nodes)
+            {
+                yield return node;
+            }
+        }
+        
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
     
     [Serializable]

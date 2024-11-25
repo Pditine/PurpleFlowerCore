@@ -19,6 +19,7 @@ namespace PurpleFlowerCore.Editor.Tool
         
         public static void OpenCSProject()
         {
+            PFCLog.Info(123);
             EditorApplication.ExecuteMenuItem("Assets/Open C# Project");
         }
         
@@ -30,6 +31,14 @@ namespace PurpleFlowerCore.Editor.Tool
         public static void ClearConsole()
         {
             QuickToolsHotKey.ClearConsole();
+        }
+        
+        public static void ProjectFolder(string path)
+        {
+            var obj = AssetDatabase.LoadAssetAtPath(path,typeof(UnityEngine.Object));
+            EditorGUIUtility.PingObject(obj);
+            AssetDatabase.OpenAsset(obj);
+            PFCLog.Info("QuickTool", "Open Project Folder: " + path);
         }
     }
 

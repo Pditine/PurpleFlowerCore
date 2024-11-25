@@ -8,7 +8,7 @@ namespace PurpleFlowerCore.Editor.Tool
 
     public static class QuickToolsHotKey
     {
-        [MenuItem("PFC/Tool/HotKey/Clear Console &c", false, 300)]
+        // [MenuItem("PFC/Tool/HotKey/Clear Console &c", false, 300)]
         public static void ClearConsole()
         {
             var assembly = Assembly.GetAssembly(typeof(SceneView));
@@ -25,7 +25,7 @@ namespace PurpleFlowerCore.Editor.Tool
             }
         }
 
-        [MenuItem("PFC/Tool/HotKey/Align View to MainCamera &#f", false, 301)]
+        // [MenuItem("PFC/Tool/HotKey/Align View to MainCamera &#f", false, 301)]
         public static void AlignViewToMainCamera()
         {
             if (SceneView.lastActiveSceneView != null && Camera.main != null)
