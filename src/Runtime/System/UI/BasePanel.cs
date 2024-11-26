@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using PlasticPipe.PlasticProtocol.Client;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace PurpleFlowerCore.UI
 {
-    public class BasePanel : MonoBehaviour
+    public partial class BasePanel : MonoBehaviour
     {
-        public Dictionary<string, UIBehaviour> controlDic = new();
+        [SerializeField] private int a;
+        
     }
+    
+
 }
