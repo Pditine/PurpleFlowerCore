@@ -7,7 +7,7 @@ namespace PurpleFlowerCore
     {
 #if UNITY_EDITOR
         [HideInInspector] public Color TagColor = Color.white;
-        [HideInInspector] public String NodeName;
+        [HideInInspector] public String NodeName = "UINode";
 #endif
         private void Awake()
         {

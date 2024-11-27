@@ -49,7 +49,12 @@ public class UINodeHierarchy
         {
             GUIStyle style = new GUIStyle();
             style.normal.textColor = uiNode.TagColor;
+            style.fontSize = 10;
             Rect rect = new Rect(selectionRect);
+            if (uiNode.NodeName == null)
+            {
+                uiNode.NodeName = "";
+            }
             rect.x += rect.width - 15 - uiNode.NodeName.Length * 5;
             GUI.Label(rect, uiNode.NodeName,style);
         }
