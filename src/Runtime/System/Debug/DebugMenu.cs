@@ -75,7 +75,7 @@ namespace PurpleFlowerCore.PFCDebug
                 {
                     if(inputs.Length > 1)
                     {
-                        PFCLog.Debug("DebugMenu", "execute command:" + command.name + ' ' + inputs[1]);
+                        PFCLog.Info("DebugMenu", "execute command:" + command.name + ' ' + inputs[1]);
                         command.Value.Invoke(inputs[1]);
                     }
                     else
@@ -86,7 +86,7 @@ namespace PurpleFlowerCore.PFCDebug
                 else
                 {
                     command.Value.Invoke(null);
-                    PFCLog.Debug("DebugMenu", "execute command:" + command.name);
+                    PFCLog.Info("DebugMenu", "execute command:" + command.name);
                 }
                 return;
             }

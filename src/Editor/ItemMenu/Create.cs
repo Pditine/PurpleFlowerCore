@@ -6,20 +6,20 @@ namespace PurpleFlowerCore.Editor.ItemMenu
 {
     public static class Create
     {
-        private static PrefabRef _prefabRef;
-        public static PrefabRef PrefabRef
+        private static EditorRef _editorRef;
+        public static EditorRef EditorRef
         {
             get
             {
-                if (_prefabRef == null)
-                    _prefabRef = SOUtility.GetSOByType<PrefabRef>(true);
-                return _prefabRef;
+                if (_editorRef == null)
+                    _editorRef = SOUtility.GetSOByType<EditorRef>(true);
+                return _editorRef;
             }
         }
         [MenuItem("GameObject/PFC/PropertyBar")]
         public static void CreatePropertyBar()
         {
-            CreatePrefab(PrefabRef.PropertyBar);
+            CreatePrefab(EditorRef.PropertyBar);
         }
         
         private static void CreatePrefab(MonoBehaviour prefab)
