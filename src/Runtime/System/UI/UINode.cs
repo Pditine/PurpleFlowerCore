@@ -15,7 +15,7 @@ namespace PurpleFlowerCore
         }
 
         /// <summary>
-        /// 禁止手动复写
+        /// Do not call or override this method manually
         /// </summary>
         protected virtual void InitEvent()
         {
