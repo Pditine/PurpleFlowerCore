@@ -36,7 +36,7 @@ namespace PurpleFlowerCore.Editor.Tool.UISystem
         public void Property()
         {
             EditorGUILayout.LabelField("UINode子类必须定义为partial");
-            //Target.NodeName = EditorGUILayout.TextField("节点名称",Target.NodeName);
+            Target.NodeName = EditorGUILayout.TextField("节点名称",Target.NodeName);
             _ignoreDefault = EditorGUILayout.Toggle("忽略默认名称节点",_ignoreDefault);
             Target.TagColor = EditorGUILayout.ColorField("颜色标识",Target.TagColor);
         }
@@ -153,7 +153,9 @@ namespace PurpleFlowerCore.Editor.Tool.UISystem
             foreach (var uiNode in uiNodeList)
             {
                 if(uiNode.transform.parent.GetComponentInParent<UINode>() != Target) continue;
-                uiNodes.Add(uiNode.name.Replace(" ",""),uiNode);
+                string NodeName = string.IsNullOrEmpty(uiNode.NodeName) ? uiNode.name : uiNode.NodeName;
+                NodeName = NodeName.Replace(" ", "");
+                uiNodes.Add(NodeName,uiNode);
             }
             return uiNodes;
         }
