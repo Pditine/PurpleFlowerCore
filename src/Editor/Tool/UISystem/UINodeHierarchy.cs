@@ -44,7 +44,7 @@ public class UINodeHierarchy
 
     private static void DrawUITag(GameObject go, Rect selectionRect)
     {
-        var uiNode = go.GetComponentInParent<UINode>();
+        var uiNode = go.GetComponentInParent<UINode>(true);
         if (uiNode)
         {
             GUIStyle style = new GUIStyle();

@@ -9,9 +9,11 @@ namespace PurpleFlowerCore
         [HideInInspector] public Color TagColor = Color.white;
         [HideInInspector] public String NodeName = "";
 #endif
+        public virtual bool IsShow => gameObject.activeSelf;
         private void Awake()
         {
             InitEvent();
+            Register();
         }
 
         /// <summary>
@@ -22,6 +24,11 @@ namespace PurpleFlowerCore
             
         }
 
+        protected virtual void Register()
+        {
+            UISystem.RegisterUI(string.IsNullOrEmpty(NodeName)?name: NodeName,this);
+        }
+
         public virtual void Show()
         {
             gameObject.SetActive(true);
@@ -30,6 +37,18 @@ namespace PurpleFlowerCore
         public virtual void Hide()
         {
             gameObject.SetActive(false);
+        }
+        
+        public virtual void Switch(bool isShow)
+        {
+            if (isShow)
+            {
+                Show();
+            }
+            else
+            {
+                Hide();
+            }
         }
     }
 }

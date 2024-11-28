@@ -83,7 +83,10 @@ namespace PurpleFlowerCore.Editor.Tool.UISystem
                 }
                 sb.Append("    }\n");
                 sb.Append("}\n");
-                if(_createEvent) AddEvent();
+                if(_createEvent)
+                {
+                    AddEvent();
+                }
                 //todo: 文件资源管理
                 if(!Directory.Exists(Path.GetDirectoryName(ScriptPath)))
                 {
@@ -113,10 +116,11 @@ namespace PurpleFlowerCore.Editor.Tool.UISystem
                 throw new Exception();
             }
             var content = File.ReadAllText(scriptPaths[0]);
-            // if (content.Contains(""))
-            // {
-            //     return;
-            // }
+            if (content.Contains("#region UI Event"))
+            {
+                PFCLog.Error("UINode","原脚本中存在\"#region UI Event\"，请手动删除后再生成UI事件");
+                throw new Exception();
+            }
             var subContent = content;
             int startIndex1 = subContent.IndexOf("class");
             subContent = subContent.Substring(startIndex1);
