@@ -7,8 +7,9 @@ namespace PurpleFlowerCore
     {
 #if UNITY_EDITOR
         [HideInInspector] public Color TagColor = Color.white;
-        [HideInInspector] public String NodeName = "";
 #endif
+        [HideInInspector] public String NodeName = "";
+
         public virtual bool IsShow => gameObject.activeSelf;
         private void Awake()
         {
