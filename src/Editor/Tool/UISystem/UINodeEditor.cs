@@ -22,7 +22,7 @@ namespace PurpleFlowerCore.Editor.Tool.UISystem
         private bool _createEvent = true;
         private UINode Target => target as UINode;
         private string ScriptPath => Application.dataPath + $"/PurpleFlowerCore/Scripts/UI/{Target.GetType().Namespace}/" +
-                                      Target.GetType().Name + ".cs";
+                                      Target.GetType().Name + "_Gen.cs";
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
@@ -53,40 +53,42 @@ namespace PurpleFlowerCore.Editor.Tool.UISystem
                 var type = Target.GetType();
                 var uiBehaviours = GetUIBehaviours();
                 var uiNodes = GetUINodes();
-                StringBuilder sb = new StringBuilder();
-                sb.Append(fillHead);
-                sb.Append("using UnityEngine;\n");
-                sb.Append("using UnityEngine.UI;\n");
-                sb.Append("namespace " + type.Namespace + "\n");
-                sb.Append("{\n");
-                sb.Append("    public partial class " + type.Name + "\n");
-                sb.Append("    {\n");
+                List<string> fileLines = new();
+                fileLines.Add(fillHead);
+                fileLines.Add("using UnityEngine;");
+                fileLines.Add("using UnityEngine.UI;");
+                fileLines.Add("namespace " + type.Namespace);
+                fileLines.Add("{");
+                fileLines.Add("    public partial class " + type.Name);
+                fileLines.Add("    {");
                 foreach (var uiBehaviour in uiBehaviours)
                 {
-                    sb.Append("        [SerializeField] private " + uiBehaviour.Value.GetType().Name + " " +
-                              uiBehaviour.Key + ";\n");
+                    fileLines.Add("        [SerializeField] private " + uiBehaviour.Value.GetType().Name + " " +
+                                  uiBehaviour.Key + ";");
                 }
                 foreach (var uiNode in uiNodes)
                 {
-                    sb.Append("        [SerializeField] private " + uiNode.Value.GetType().Name + " " +
-                              uiNode.Key + ";\n");
+                    fileLines.Add("        [SerializeField] private " + uiNode.Value.GetType().Name + " " +
+                                  uiNode.Key + ";");
                 }
                 if(_createEvent)
                 {
-                    sb.Append("        protected override void InitEvent()\n");
-                    sb.Append("        {\n");
+                    fileLines.Add("        protected override void InitEvent()");
+                    fileLines.Add("        {");
                     foreach (var uiBehaviour in GetUIBehaviours<Button>())
                     {
-                        sb.Append("            " + uiBehaviour.Key + $".onClick.AddListener({uiBehaviour.Key}Click);\n");
+                        fileLines.Add("            " + uiBehaviour.Key + $".onClick.AddListener({uiBehaviour.Key}Click);");
                     }
-                    sb.Append("        }\n");
+                    fileLines.Add("        }");
                 }
-                sb.Append("    }\n");
-                sb.Append("}\n");
+                fileLines.Add("    }");
+                fileLines.Add("}");
                 if(_createEvent)
                 {
                     AddEvent();
                 }
+                StringBuilder sb = new StringBuilder();
+                sb.Append(string.Join("\n",fileLines));
                 //todo: 文件资源管理
                 if(!Directory.Exists(Path.GetDirectoryName(ScriptPath)))
                 {
@@ -116,42 +118,89 @@ namespace PurpleFlowerCore.Editor.Tool.UISystem
                 throw new Exception();
             }
             var content = File.ReadAllText(scriptPaths[0]);
-            if (content.Contains("#region UI Event"))
+            List<string> lines = new(content.Split('\n'));
+            int startIndex = -1;
+            int endIndex = -1;
+            for (int i = 0; i < lines.Count; i++)
             {
-                PFCLog.Error("UINode","原脚本中存在\"#region UI Event\"，请手动删除后再生成UI事件");
-                throw new Exception();
+                if(lines[i].Contains("#region UI Event"))
+                {
+                    if(startIndex != -1)
+                    {
+                        PFCLog.Error("UINode","there are more than one region UI Event");
+                        return;
+                    }
+                    startIndex = i;
+                }
+                if (lines[i].Contains("#endregion"))
+                {
+                    if (endIndex != -1)
+                    {
+                        PFCLog.Error("UINode","there are no region UI Event");
+                        return;
+                    }
+                    endIndex = i;
+                }
             }
-            var subContent = content;
-            int startIndex1 = subContent.IndexOf("class");
-            subContent = subContent.Substring(startIndex1);
-            int startIndex2 = subContent.IndexOf("{");
-            startIndex2++;
-            subContent = subContent.Substring(startIndex2);
-            int num = 1;
-            int index = 0;
-            for (; index < subContent.Length; index++)
+            
+            if(startIndex == -1 || endIndex == -1)
             {
-                if(subContent[index] == '{')
-                    num++;
-                if (subContent[index] == '}')
-                    num--;
-                if (num == 0)
-                    break;
+                content = string.Join("\n",lines);
+                var subContent = content;
+                int startIndex1 = subContent.IndexOf("class");
+                subContent = subContent.Substring(startIndex1);
+                int startIndex2 = subContent.IndexOf("{");
+                startIndex2++;
+                subContent = subContent.Substring(startIndex2);
+                int num = 1;
+                int index = 0;
+                for (; index < subContent.Length; index++)
+                {
+                    if(subContent[index] == '{')
+                        num++;
+                    if (subContent[index] == '}')
+                        num--;
+                    if (num == 0)
+                        break;
+                }
+                StringBuilder sb = new StringBuilder();
+                sb.Append("\n");
+                sb.Append("        // Do not modify the region's name if you don't know how it works\n");
+                sb.Append("        #region UI Event\n");
+                var buttons = GetUIBehaviours<Button>();
+                foreach (var button in buttons)
+                {
+                    sb.Append("        private void " + button.Key + "Click()\n");
+                    sb.Append("        {\n");
+                    sb.Append("            \n");
+                    sb.Append("        }\n");
+                }
+                sb.Append("        #endregion\n    ");
+                content = content.Insert(startIndex1 + startIndex2 + index, sb.ToString());
             }
-            StringBuilder sb = new StringBuilder();
-            sb.Append("\n");
-            sb.Append("        #region UI Event\n");
-            var buttons = GetUIBehaviours<Button>();
-            foreach (var button in buttons)
+            else
             {
-                sb.Append("        private void " + button.Key + "Click()\n");
-                sb.Append("        {\n");
-                sb.Append("            \n");
-                sb.Append("        }\n");
+                // for(int i = startIndex + 1; i < endIndex; i++)
+                // {
+                //     lines[i] = "//" + lines[i];
+                // }
+
+                startIndex++;
+                var buttons = GetUIBehaviours<Button>();
+                foreach (var button in buttons)
+                {
+                    if( lines.FindIndex(startIndex, endIndex - startIndex, s => s.Contains(button.Key)) != -1) continue;
+                    lines.Insert(endIndex, "        private void " + button.Key + "Click()\n");
+                    lines.Insert(endIndex + 1,"        {\n");
+                    lines.Insert(endIndex + 2,"            \n");
+                    lines.Insert(endIndex + 3,"        }\n");
+                    endIndex += 4;
+                }
+                content = string.Join("\n",lines);
             }
-            sb.Append("        #endregion\n    ");
-            content = content.Insert(startIndex1 + startIndex2 + index, sb.ToString());
+            
             File.WriteAllText(scriptPaths[0], content);
+                    lines.Insert(endIndex + 2,"        }\n");
         }
 
         private void DeleteScript()
