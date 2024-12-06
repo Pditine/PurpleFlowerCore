@@ -37,7 +37,7 @@ namespace PurpleFlowerCore.Editor.Tool.UISystem
 
         public void Property()
         {
-            EditorGUILayout.LabelField("UINode子类必须定义为partial");
+            // EditorGUILayout.LabelField("UINode子类必须定义为partial");
             Target.NodeName = EditorGUILayout.TextField("节点名称",Target.NodeName);
             _ignoreDefault = EditorGUILayout.Toggle("忽略默认名称节点",_ignoreDefault);
             _createEvent = EditorGUILayout.Toggle("生成UI事件",_createEvent);
@@ -83,10 +83,9 @@ namespace PurpleFlowerCore.Editor.Tool.UISystem
                 }
                 fileLines.Add("    }");
                 fileLines.Add("}");
-                if(_createEvent)
-                {
-                    AddEvent();
-                }
+                
+                HandleSourceScript();
+                
                 StringBuilder sb = new StringBuilder();
                 sb.Append(string.Join("\n",fileLines));
                 //todo: 文件资源管理
@@ -105,7 +104,7 @@ namespace PurpleFlowerCore.Editor.Tool.UISystem
             }
         }
 
-        private void AddEvent()
+        private void HandleSourceScript()
         {
             var scripts = AssetDatabase.FindAssets($"{Target.GetType().Name} t:Script")
                 .Select(AssetDatabase.GUIDToAssetPath);
@@ -119,6 +118,19 @@ namespace PurpleFlowerCore.Editor.Tool.UISystem
             }
             var content = File.ReadAllText(scriptPaths[0]);
             List<string> lines = new(content.Split('\n'));
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                if(lines[i].Contains(Target.GetType().Name))
+                {
+                    if (!lines[i].Contains("partial"))
+                    {
+                        lines[i] = lines[i].Replace("class", "partial class");
+                    }
+                    break;
+                }
+            }
+            
             int startIndex = -1;
             int endIndex = -1;
             for (int i = 0; i < lines.Count; i++)
