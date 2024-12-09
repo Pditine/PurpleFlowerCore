@@ -2,6 +2,8 @@
 using PurpleFlowerCore.Base;
 using UnityEngine;
 using PurpleFlowerCore.Pool;
+using UnityEngine.EventSystems;
+
 namespace PurpleFlowerCore
 {
     public static class PoolSystem
@@ -11,7 +13,7 @@ namespace PurpleFlowerCore
         {
             get
             {
-                if (_objectPoolModule is null)
+                if (_objectPoolModule == null)
                     _objectPoolModule = new ObjectPoolModule();
                 return _objectPoolModule;
             }
@@ -23,7 +25,7 @@ namespace PurpleFlowerCore
         {
             get
             {
-                if (_gameObjectPoolModule is not null) return _gameObjectPoolModule;
+                if (_gameObjectPoolModule == null) return _gameObjectPoolModule;
                 var root = new GameObject("Pool")
                 {
                     transform = { parent = PFCManager.Instance.transform }

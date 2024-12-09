@@ -33,6 +33,21 @@ namespace PurpleFlowerCore
             EventCenter.EventTrigger<T0,T1>(eventName,info0,info1);
         }
 
+        public static void EventTrigger(PFCEvent pfcEvent)
+        {
+            EventCenter.EventTrigger(pfcEvent.ToString());
+        }
+        
+        public static void EventTrigger<T0>(PFCEvent pfcEvent,T0 info0)
+        {
+            EventCenter.EventTrigger<T0>(pfcEvent.ToString(),info0);
+        }
+        
+        public static void EventTrigger<T0,T1>(PFCEvent pfcEvent,T0 info0,T1 info1)
+        {
+            EventCenter.EventTrigger<T0,T1>(pfcEvent.ToString(),info0,info1);
+        }
+
         #endregion
 
         #region 添加事件监听
@@ -50,6 +65,21 @@ namespace PurpleFlowerCore
         public static void AddEventListener<T0,T1>(string eventName,UnityAction<T0,T1> action)
         {
             EventCenter.AddEventListener<T0,T1>(eventName,action);
+        }
+        
+        public static void AddEventListener(PFCEvent pfcEvent,UnityAction action)
+        {
+            EventCenter.AddEventListener(pfcEvent.ToString(),action);
+        }
+        
+        public static void AddEventListener<T0>(PFCEvent pfcEvent,UnityAction<T0> action)
+        {
+            EventCenter.AddEventListener<T0>(pfcEvent.ToString(),action);
+        }
+        
+        public static void AddEventListener<T0,T1>(PFCEvent pfcEvent,UnityAction<T0,T1> action)
+        {
+            EventCenter.AddEventListener<T0,T1>(pfcEvent.ToString(),action);
         }
 
         #endregion
@@ -70,6 +100,21 @@ namespace PurpleFlowerCore
         {
             EventCenter.RemoveEventListener<T0,T1>(eventName,action);
         }
+        
+        public static void RemoveEventListener(PFCEvent pfcEvent,UnityAction action)
+        {
+            EventCenter.RemoveEventListener(pfcEvent.ToString(),action);
+        }
+        
+        public static void RemoveEventListener<T0>(PFCEvent pfcEvent,UnityAction<T0> action)
+        {
+            EventCenter.RemoveEventListener<T0>(pfcEvent.ToString(),action);
+        }
+        
+        public static void RemoveEventListener<T0,T1>(PFCEvent pfcEvent,UnityAction<T0,T1> action)
+        {
+            EventCenter.RemoveEventListener<T0,T1>(pfcEvent.ToString(),action);
+        }
 
         #endregion
 
@@ -82,5 +127,10 @@ namespace PurpleFlowerCore
         {
             EventCenter.Clear(eventName);
         }
+    }
+
+    public enum PFCEvent
+    {
+        LoadScene
     }
 }

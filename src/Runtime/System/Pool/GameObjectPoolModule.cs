@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PurpleFlowerCore.Pool
@@ -6,6 +7,16 @@ namespace PurpleFlowerCore.Pool
     public class GameObjectPoolModule : MonoBehaviour
     {
         private readonly Dictionary<string,GameObjectPoolData> _data = new();
+
+        private void OnEnable()
+        {
+            EventSystem.AddEventListener(PFCEvent.LoadScene,DestroyThis);
+        }
+        
+        private void OnDisable()
+        {
+            EventSystem.RemoveEventListener(PFCEvent.LoadScene,DestroyThis);
+        }
 
         public void InitGameObjectPoolData(GameObject theGameObject,int maxCount = -1, bool infinitePop = true, bool fillWhenInit = false)
         {
@@ -58,6 +69,11 @@ namespace PurpleFlowerCore.Pool
             if (_data.ContainsKey(theGameObjectName)) return true;
             PFCLog.Error("请提供有物体为参数的对象池数据初始化:"+theGameObjectName);
             return false;
+        }
+
+        private void DestroyThis()
+        {
+            Destroy(gameObject);
         }
     }
 }

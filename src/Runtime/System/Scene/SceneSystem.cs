@@ -7,16 +7,17 @@ namespace PurpleFlowerCore
 {
     public static class SceneSystem
     {
-        
         public static void LoadScene(string name, UnityAction callBack = null)
         {
             SceneManager.LoadScene(name);
+            EventSystem.EventTrigger(PFCEvent.LoadScene);
             callBack?.Invoke();
         }
         
         public static void LoadScene(int index, UnityAction callBack = null)
         {
             SceneManager.LoadScene(index);
+            EventSystem.EventTrigger(PFCEvent.LoadScene);
             callBack?.Invoke();
         }
 
@@ -36,6 +37,7 @@ namespace PurpleFlowerCore
             }
             
             yield return ao;
+            EventSystem.EventTrigger(PFCEvent.LoadScene);
             callBack?.Invoke();
         }
         
@@ -52,6 +54,7 @@ namespace PurpleFlowerCore
                 yield return 0;
             }
             yield return ao;
+            EventSystem.EventTrigger(PFCEvent.LoadScene);
             callBack?.Invoke();
         }
     }
