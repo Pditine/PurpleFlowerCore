@@ -32,6 +32,11 @@ namespace PurpleFlowerCore.Pool
         
         public GameObject GetGameObject(GameObject theGameObject)
         {
+            if (theGameObject == null)
+            {
+                PFCLog.Error("PoolSystem", "传入的物体为空");
+                return null;
+            }
             CheckGameObjectPoolData(theGameObject);
             return _data[theGameObject.name].Pop();
         }

@@ -25,7 +25,7 @@ namespace PurpleFlowerCore
         {
             get
             {
-                if (_gameObjectPoolModule == null) return _gameObjectPoolModule;
+                if (_gameObjectPoolModule != null) return _gameObjectPoolModule;
                 var root = new GameObject("Pool")
                 {
                     transform = { parent = PFCManager.Instance.transform }

@@ -66,7 +66,7 @@ namespace PurpleFlowerCore.Editor.Tool
 
                     if (GUILayout.Button(button.name))
                     {
-                        button.command?.Invoke();
+                        // button.command?.Invoke();
                     }
                 }
 

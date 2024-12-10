@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PurpleFlowerCore.Utility;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,28 +18,11 @@ namespace PurpleFlowerCore.Editor.Tool
             UnityEditor.SceneManagement.EditorSceneManager.OpenScene(scenePath);
         }
         
-        public static void OpenCSProject()
-        {
-            PFCLog.Info(123);
-            EditorApplication.ExecuteMenuItem("Assets/Open C# Project");
-        }
-        
-        public static void Refresh()
-        {
-            EditorApplication.ExecuteMenuItem("Assets/Refresh");
-        }
-        
-        public static void ClearConsole()
-        {
-            QuickToolsHotKey.ClearConsole();
-        }
-        
-        public static void ProjectFolder(string path)
+        public static void OpenFolder(string path)
         {
             var obj = AssetDatabase.LoadAssetAtPath(path,typeof(UnityEngine.Object));
             EditorGUIUtility.PingObject(obj);
             AssetDatabase.OpenAsset(obj);
-            PFCLog.Info("QuickTool", "Open Project Folder: " + path);
         }
     }
 
@@ -46,16 +30,16 @@ namespace PurpleFlowerCore.Editor.Tool
     public class QuickToolButtonData
     {
         public string name;
+        public CommandType commandType;
         public bool lineBreak;
+        public string commandParam;
         public UnityEvent command;
-
-        // public QuickToolButtonData()
-        // {
-        //     this.name = "指令名称";
-        //     this.lineBreak = false;
-        //     this.command = null;
-        // }
-
     }
 
+    public enum CommandType
+    {
+        OpenScene,
+        OpenFolder,
+        Custom
+    }
 }
