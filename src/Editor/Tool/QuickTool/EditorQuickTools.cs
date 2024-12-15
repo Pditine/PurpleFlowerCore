@@ -35,7 +35,7 @@ namespace PurpleFlowerCore.Editor.Tool
 
         private Vector2 _scrollPosition;
         
-        [MenuItem("PFC/QuickTool", false, 302)]
+        [MenuItem("PFC/快速工具", false, 302)]
         public static void CreateWindow()
         {
             var window = GetWindow<EditorQuickTools>();
