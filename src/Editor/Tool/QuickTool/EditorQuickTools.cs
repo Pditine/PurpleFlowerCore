@@ -35,11 +35,11 @@ namespace PurpleFlowerCore.Editor.Tool
 
         private Vector2 _scrollPosition;
         
-        [MenuItem("PFC/Tool/QuickTool", false, 302)]
+        [MenuItem("PFC/QuickTool", false, 302)]
         public static void CreateWindow()
         {
             var window = GetWindow<EditorQuickTools>();
-            window.titleContent = new GUIContent("Quick Tools");
+            window.titleContent = new GUIContent("Quick Tool");
             window.minSize = new Vector2(150f, 50f);
             window.Show();
         }
@@ -63,11 +63,23 @@ namespace PurpleFlowerCore.Editor.Tool
                         EditorGUILayout.EndHorizontal();
                         EditorGUILayout.BeginHorizontal();
                     }
-
+                    // button.color = new Color(button.color.r, button.color.g, button.color.b, 1);
+                    GUI.backgroundColor = button.color;
                     if (GUILayout.Button(button.name))
                     {
-                        // button.command?.Invoke();
+                        try
+                        {
+                            if (button.commandType == QuickToolButtonData.CommandType.Custom)
+                                button.command?.Invoke();
+                            else
+                                button.Command();
+                        }
+                        catch (Exception e)
+                        {
+                            PFCLog.Error("QuickTool", e.Message);
+                        }
                     }
+                    GUI.backgroundColor = Color.white;
                 }
 
                 EditorGUILayout.EndHorizontal();

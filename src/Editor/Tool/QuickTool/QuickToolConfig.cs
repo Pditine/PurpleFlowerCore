@@ -18,11 +18,37 @@ namespace PurpleFlowerCore.Editor.Tool
             UnityEditor.SceneManagement.EditorSceneManager.OpenScene(scenePath);
         }
         
-        public static void OpenFolder(string path)
+        public static void OpenAsset(string path)
         {
             var obj = AssetDatabase.LoadAssetAtPath(path,typeof(UnityEngine.Object));
+            if(obj == null)
+            {
+                PFCLog.Error("QuickTool",$"can't find asset:{path}");
+                return;
+            }
             EditorGUIUtility.PingObject(obj);
             AssetDatabase.OpenAsset(obj);
+        }
+        
+        public static void ShowInExplorer(string path)
+        {
+            EditorUtility.RevealInFinder(path);
+        }
+        
+        public static void OpenFile(string path)
+        {
+            EditorUtility.OpenWithDefaultApp(path);
+        }
+        
+        public static void Select(string path)
+        {
+            var obj = AssetDatabase.LoadAssetAtPath(path,typeof(UnityEngine.Object));
+            if(obj == null)
+            {
+                PFCLog.Error("QuickTool",$"can't find asset:{path}");
+                return;
+            }
+            Selection.activeObject = obj;
         }
     }
 
@@ -31,15 +57,47 @@ namespace PurpleFlowerCore.Editor.Tool
     {
         public string name;
         public CommandType commandType;
+        public Color color;
         public bool lineBreak;
         public string commandParam;
         public UnityEvent command;
+        
+        public enum CommandType
+        {
+            OpenScene,
+            OpenAsset,
+            OpenFile,
+            Select,
+            ShowInExplorer,
+            Custom
+        }
+
+        public void Command()
+        {
+            PFCLog.Info("QuickTool",$"execute command:{commandType}({commandParam})");
+            switch (commandType)
+            {
+                case CommandType.OpenScene:
+                    QuickToolConfig.OpenScene(commandParam);
+                    break;
+                case CommandType.OpenAsset:
+                    QuickToolConfig.OpenAsset(commandParam);
+                    break;
+                case CommandType.ShowInExplorer:
+                    QuickToolConfig.ShowInExplorer(commandParam);
+                    break;
+                case CommandType.OpenFile:
+                    QuickToolConfig.OpenFile(commandParam);
+                    break;
+                case CommandType.Select:
+                    QuickToolConfig.Select(commandParam);
+                    break;
+                case CommandType.Custom:
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
     }
 
-    public enum CommandType
-    {
-        OpenScene,
-        OpenFolder,
-        Custom
-    }
+
 }
