@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using GameObjectUtility = UnityEditor.GameObjectUtility;
 
-namespace PurpleFlowerCore.Editor.Tool
+namespace GP
 {
     public class ScriptMissingChecker: EditorWindow
     {
@@ -13,10 +13,9 @@ namespace PurpleFlowerCore.Editor.Tool
         private readonly List<GameObject> _gos = new();
         private bool _showGameObject = true;
         private bool _showFilter;
-        private string _path = "Assets/";
         private Vector2 _scrollPosition;
         
-        [MenuItem("GP/Script Missing Checker")]
+        [MenuItem("PFC/脚本丢失检查工具")]
         private static void OpenWindow()
         {
             var win = GetWindow<ScriptMissingChecker>("Script Missing Checker");
@@ -30,7 +29,6 @@ namespace PurpleFlowerCore.Editor.Tool
                                      "查场景中的物体，点击CheckAsset检查资源中的物体。可以在" +
                                      "Filter中输入需要忽略的文件夹路径，点击RemoveMissingScripts" +
                                      "将去除GameObjects中的Missing脚本", EditorStyles.wordWrappedLabel);
-            _path = EditorGUILayout.TextField("Path", _path);
             _showFilter = EditorGUILayout.Foldout(_showFilter, "Filter");
             if(_showFilter)
             {
@@ -65,17 +63,11 @@ namespace PurpleFlowerCore.Editor.Tool
             GameObject[] gos = FindObjectsOfType<GameObject>();
             foreach (var go in gos)
             {
-                //Component[] components = go.GetComponents<Component>();
-                // if (components.Any(component => component == null))
-                // {
-                //     _gos.Add(go);
-                //     sb.AppendLine(go.GetScenePath());
-                // }
-                
-                if (GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(go) > 0)
+                Component[] components = go.GetComponents<Component>();
+                if (components.Any(component => component == null))
                 {
                     _gos.Add(go);
-                    sb.AppendLine(go.ToString());
+                    sb.AppendLine(go.name);
                 }
             }
             if(sb.Length == 0)
@@ -92,22 +84,16 @@ namespace PurpleFlowerCore.Editor.Tool
             if (!GUILayout.Button("Check Asset")) return;
             _gos.Clear();
             StringBuilder sb = new StringBuilder();
-            AssetDatabase.FindAssets("t:GameObject",new []{_path}).ToList().ForEach(guid =>
+            AssetDatabase.FindAssets("t:GameObject").ToList().ForEach(guid =>
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 if(_filter.Count > 0 && _filter.Any(filter => !string.IsNullOrEmpty(filter) && path.StartsWith(filter))) return;
                 GameObject go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-                // Component[] components = go.GetComponents<Component>();
-                // if (components.Any(component => component == null))
-                // {
-                //
-                // }
-                int num = GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(go);
-                if (num > 0)
+                Component[] components = go.GetComponents<Component>();
+                if (components.Any(component => component == null))
                 {
                     _gos.Add(go);
                     sb.AppendLine(path);
-                    
                 }
             });
             if(sb.Length == 0)
@@ -136,6 +122,7 @@ namespace PurpleFlowerCore.Editor.Tool
                 Debug.Log("[ScriptMissingChecker] No missing scripts found.");
                 return;
             }
+
             Debug.Log($"[ScriptMissingChecker] Removed missing scripts in GameObjects:\n{sb}");
         }
     }

@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using PurpleFlowerCore.Utility;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
+using Object = UnityEngine.Object;
 
 namespace PurpleFlowerCore.Editor.Tool
 {
@@ -20,7 +18,7 @@ namespace PurpleFlowerCore.Editor.Tool
         
         public static void OpenAsset(string path)
         {
-            var obj = AssetDatabase.LoadAssetAtPath(path,typeof(UnityEngine.Object));
+            var obj = AssetDatabase.LoadAssetAtPath(path,typeof(Object));
             if(obj == null)
             {
                 PFCLog.Error("QuickTool",$"can't find asset:{path}");
@@ -72,6 +70,15 @@ namespace PurpleFlowerCore.Editor.Tool
             Custom
         }
 
+        public QuickToolButtonData()
+        {
+            name = "NewButton";
+            commandType = CommandType.OpenScene;
+            color = Color.white;
+            lineBreak = false;
+            commandParam = "";
+        }
+
         public void Command()
         {
             PFCLog.Info("QuickTool",$"execute command:{commandType}({commandParam})");
@@ -98,6 +105,4 @@ namespace PurpleFlowerCore.Editor.Tool
             }
         }
     }
-
-
 }

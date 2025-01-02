@@ -1,11 +1,12 @@
 using System;
+using System.Linq;
 using PurpleFlowerCore.Editor.Utility;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace PurpleFlowerCore.Editor.Tool
 {
-    #region 便捷工具箱
     public sealed class EditorQuickTools : EditorWindow
     {
         private QuickToolConfig _config;
@@ -22,20 +23,20 @@ namespace PurpleFlowerCore.Editor.Tool
         }
 
         private bool _openConfigPanel;
-        private UnityEditor.Editor _configPanel;
-        private UnityEditor.Editor ConfigPanel
-        {
-            get
-            {
-                if(_configPanel == null)
-                    _configPanel = UnityEditor.Editor.CreateEditor(Config);
-                return _configPanel;
-            }
-        }
+        // private UnityEditor.Editor _configPanel;
+        // private UnityEditor.Editor ConfigPanel
+        // {
+        //     get
+        //     {
+        //         if(_configPanel == null)
+        //             _configPanel = UnityEditor.Editor.CreateEditor(Config);
+        //         return _configPanel;
+        //     }
+        // }
 
         private Vector2 _scrollPosition;
         
-        [MenuItem("PFC/快速工具", false, 302)]
+        [MenuItem("PFC/快速跳转工具", false, 302)]
         public static void CreateWindow()
         {
             var window = GetWindow<EditorQuickTools>();
@@ -63,7 +64,6 @@ namespace PurpleFlowerCore.Editor.Tool
                         EditorGUILayout.EndHorizontal();
                         EditorGUILayout.BeginHorizontal();
                     }
-                    // button.color = new Color(button.color.r, button.color.g, button.color.b, 1);
                     GUI.backgroundColor = button.color;
                     if (GUILayout.Button(button.name))
                     {
@@ -83,11 +83,14 @@ namespace PurpleFlowerCore.Editor.Tool
                 }
 
                 EditorGUILayout.EndHorizontal();
-
-
-                _openConfigPanel = EditorGUILayout.Toggle("打开配置面板", _openConfigPanel);
+                
+                _openConfigPanel = EditorGUILayout.Foldout(_openConfigPanel, new GUIContent("配置面板"));
                 if (_openConfigPanel)
-                    ConfigPanel.OnInspectorGUI();
+                {
+                    // ConfigPanel.OnInspectorGUI();
+                    ConfigPanel();
+                }
+                
                 EditorGUILayout.EndVertical();
                 EditorGUILayout.EndScrollView();
             }            
@@ -100,7 +103,47 @@ namespace PurpleFlowerCore.Editor.Tool
                 throw;
             }
         }
-    }
 
-    #endregion
+        private void ConfigPanel()
+        {
+            if (GUILayout.Button("Add Button"))
+            {
+                Config.quickToolButtonData.Add(new QuickToolButtonData());
+            }
+
+            try
+            {
+                foreach (var buttonConfig in Config.quickToolButtonData)
+                {
+                    EditorGUILayout.Space(10);
+                    buttonConfig.name = EditorGUILayout.TextField("Name", buttonConfig.name);
+                    buttonConfig.lineBreak = EditorGUILayout.Toggle("Line Break", buttonConfig.lineBreak);
+                    buttonConfig.color = EditorGUILayout.ColorField("Color", buttonConfig.color);
+                    buttonConfig.commandType =
+                        (QuickToolButtonData.CommandType)EditorGUILayout.EnumPopup("Command Type",
+                            buttonConfig.commandType);
+                    if (buttonConfig.commandType == QuickToolButtonData.CommandType.Custom)
+                    {
+                        EditorGUILayout.LabelField("not implemented", EditorStyles.boldLabel);
+                    }
+                    else
+                    {
+                        buttonConfig.commandParam =
+                            EditorGUILayout.TextField("Command Param", buttonConfig.commandParam);
+                    }
+
+                    if (GUILayout.Button("Remove"))
+                    {
+                        Config.quickToolButtonData.Remove(buttonConfig);
+                        break;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                if (e is not InvalidOperationException)
+                    throw;
+            }
+        }
+    }
 }
