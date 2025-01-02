@@ -13,9 +13,10 @@ namespace GP
         private readonly List<GameObject> _gos = new();
         private bool _showGameObject = true;
         private bool _showFilter;
+        private string _path = "Assets/";
         private Vector2 _scrollPosition;
         
-        [MenuItem("PFC/脚本丢失检查工具")]
+        [MenuItem("PFC/脚本丢失检查")]
         private static void OpenWindow()
         {
             var win = GetWindow<ScriptMissingChecker>("Script Missing Checker");
@@ -29,6 +30,7 @@ namespace GP
                                      "查场景中的物体，点击CheckAsset检查资源中的物体。可以在" +
                                      "Filter中输入需要忽略的文件夹路径，点击RemoveMissingScripts" +
                                      "将去除GameObjects中的Missing脚本", EditorStyles.wordWrappedLabel);
+            _path = EditorGUILayout.TextField("Path", _path);
             _showFilter = EditorGUILayout.Foldout(_showFilter, "Filter");
             if(_showFilter)
             {
@@ -63,11 +65,12 @@ namespace GP
             GameObject[] gos = FindObjectsOfType<GameObject>();
             foreach (var go in gos)
             {
-                Component[] components = go.GetComponents<Component>();
-                if (components.Any(component => component == null))
+                int num = 0;
+                CheckMissingScript(go, ref num);
+                if (num > 0)
                 {
                     _gos.Add(go);
-                    sb.AppendLine(go.name);
+                    sb.AppendLine(go.ToString() + $"({num})");
                 }
             }
             if(sb.Length == 0)
@@ -76,7 +79,7 @@ namespace GP
                 return;
             }
             
-            Debug.LogError($"[ScriptMissingChecker] Found missing scripts in Scene:\n{sb}");
+            Debug.Log($"[ScriptMissingChecker] Found missing scripts in Scene:\n{sb}");
         }
         
         private void CheckAsset()
@@ -84,16 +87,17 @@ namespace GP
             if (!GUILayout.Button("Check Asset")) return;
             _gos.Clear();
             StringBuilder sb = new StringBuilder();
-            AssetDatabase.FindAssets("t:GameObject").ToList().ForEach(guid =>
+            AssetDatabase.FindAssets("t:GameObject",new []{_path}).ToList().ForEach(guid =>
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 if(_filter.Count > 0 && _filter.Any(filter => !string.IsNullOrEmpty(filter) && path.StartsWith(filter))) return;
                 GameObject go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-                Component[] components = go.GetComponents<Component>();
-                if (components.Any(component => component == null))
+                int num = 0;
+                CheckMissingScript(go, ref num);
+                if (num > 0)
                 {
                     _gos.Add(go);
-                    sb.AppendLine(path);
+                    sb.AppendLine(path + $"({num})");
                 }
             });
             if(sb.Length == 0)
@@ -101,8 +105,7 @@ namespace GP
                 Debug.Log("[ScriptMissingChecker] No missing scripts found in Assets.");
                 return;
             }
-            
-            Debug.LogError($"[ScriptMissingChecker] Found missing scripts in Prefabs:\n{sb}");
+            Debug.Log($"[ScriptMissingChecker] Found missing scripts in Prefabs:\n{sb}");
         }
 
         private void RemoveMissingScripts()
@@ -110,11 +113,12 @@ namespace GP
             if (!GUILayout.Button("Remove Missing Scripts")) return;
             StringBuilder sb = new();
             foreach (var go in _gos)
-            {
-                var num = GameObjectUtility.RemoveMonoBehavioursWithMissingScript(go);
+            { 
+                int num = 0;
+                DeleteMissingScript(go, ref num);
                 if (num > 0)
                 {
-                    sb.AppendLine($"{go.name}: {num} scripts");
+                    sb.AppendLine(go.ToString() + $"({num})");
                 }
             }
             if (sb.Length == 0)
@@ -122,8 +126,23 @@ namespace GP
                 Debug.Log("[ScriptMissingChecker] No missing scripts found.");
                 return;
             }
-
             Debug.Log($"[ScriptMissingChecker] Removed missing scripts in GameObjects:\n{sb}");
+        }
+        
+        private static void CheckMissingScript(GameObject go, ref int num)
+        {
+            int count = GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(go);
+            num += count;
+            foreach (Transform child in go.transform)
+                CheckMissingScript(child.gameObject,ref num);
+        }
+        
+        private static void DeleteMissingScript(GameObject go, ref int num)
+        {
+            int count = GameObjectUtility.RemoveMonoBehavioursWithMissingScript(go);
+            num += count;
+            foreach (Transform child in go.transform)
+                DeleteMissingScript(child.gameObject, ref num);
         }
     }
 }
