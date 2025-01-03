@@ -2,7 +2,7 @@
   "name": "com.pditine.purpleflowercore",
   "version": "0.0.0",
   "displayName": "PurpleFlowerCore",
-  "unity": "2019.1",
+  "unity": "2021",
   "description": "程序开发框架，提供多种开发可能用到的定制化功能或编辑器工具",
   "keywords": [
     "程序框架",
@@ -10,6 +10,9 @@
     "data config",
     "数据配置"
   ],
+  "dependencies": {
+    "com.unity.addressables": "1.21.21"
+  },
   "author": {
     "name": "Pditine",
     "email": "hanfe666@outlook.com",
