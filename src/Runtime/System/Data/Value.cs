@@ -2,9 +2,9 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace PurpleFlowerCore.Utility
+namespace PurpleFlowerCore.Data
 {
-    [Serializable]
+    [Serializable][Obsolete]
     public class Value<T> where T : struct , IComparable<T>
     {
         /// <summary>

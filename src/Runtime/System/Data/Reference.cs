@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PurpleFlowerCore.Utility
+namespace PurpleFlowerCore.Data
 {
     public class Reference : MonoBehaviour
     {
