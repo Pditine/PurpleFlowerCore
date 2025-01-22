@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace PurpleFlowerCore.Utility
+namespace PurpleFlowerCore
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class ConfigurableAttribute : Attribute

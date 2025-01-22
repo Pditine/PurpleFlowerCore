@@ -55,14 +55,8 @@ namespace PurpleFlowerCore
         private void OnGUI()
         {
             _scrollPosition = GUILayout.BeginScrollView(_scrollPosition);
-            //Head();
             ShowData();
             EditorGUILayout.EndScrollView();
-            // GUILayout.FlexibleSpace();
-            // GUILayout.BeginHorizontal();
-            // Refresh();
-            // Apply();
-            //GUILayout.EndHorizontal();
         }
         
         private void LoadData()
@@ -86,14 +80,6 @@ namespace PurpleFlowerCore
                 _dataTree.AddItem(new GUIContent(path), false, () => { _currentData = data; });
             }
         }
-        
-        // private void Head()
-        // {
-        //     var fontStyle = new GUIStyle();
-        //     fontStyle.fontSize = 20;
-        //     fontStyle.normal.textColor = Color.green;
-        //     GUILayout.Label("综合数值控制器", fontStyle);
-        // }
 
         private void ShowData()
         {

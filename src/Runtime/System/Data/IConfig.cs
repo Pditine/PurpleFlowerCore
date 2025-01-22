@@ -1,7 +1,7 @@
-namespace PurpleFlowerCore.Data
-{
-    public interface IConfig
-    {
-        
-    }
-}
+// namespace PurpleFlowerCore.Data
+// {
+//     public interface IConfig
+//     {
+//         
+//     }
+// }
