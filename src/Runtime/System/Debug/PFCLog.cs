@@ -29,12 +29,12 @@ namespace PurpleFlowerCore
             string fullContent;
             if (channel == null)
             {
-                fullContent = $"<color=#{ColorUtility.ToHtmlStringRGB(prefixColor)}>[PFC_{prefix}]</color>" +
+                fullContent = $"<color=#{ColorUtility.ToHtmlStringRGB(prefixColor)}>[{prefix}]</color>" +
                           $"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{content}</color>";
             }
             else
             {
-                fullContent = $"<color=#{ColorUtility.ToHtmlStringRGB(prefixColor)}>[PFC_{prefix}][{channel}]</color>" +
+                fullContent = $"<color=#{ColorUtility.ToHtmlStringRGB(prefixColor)}>[{prefix}][{channel}]</color>" +
                           $"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{content}</color>";
             }
             switch(level)
