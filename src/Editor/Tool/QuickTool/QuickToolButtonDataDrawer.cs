@@ -9,7 +9,7 @@ namespace PurpleFlowerCore.Editor.Tool
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            QuickToolButtonData target = property.boxedValue as QuickToolButtonData;
+            QuickToolButtonData target = property.managedReferenceValue as QuickToolButtonData;
             EditorGUI.BeginProperty(position, label, property);
             EditorGUILayout.PropertyField(property.FindPropertyRelative("name"), new GUIContent("Name"));
             EditorGUILayout.PropertyField(property.FindPropertyRelative("lineBreak"), new GUIContent("Line Break"));
