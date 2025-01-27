@@ -6,6 +6,10 @@ Unity游戏开发中，程序框架的使用已经非常广泛，在一段时间
 
 其中大部分是造轮子，小部分是我自创的功能。才疏学浅，漏洞百出，请多指教。
 
+## 快速开始
+
+使用https://github.com/Pditine/PurpleFlowerCore.git?path=src添加Package
+
 ## 待办事项
 
 - System依赖汇总
