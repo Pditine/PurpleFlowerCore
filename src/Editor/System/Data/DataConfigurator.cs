@@ -1,11 +1,8 @@
 #if UNITY_EDITOR
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using PurpleFlowerCore.Utility;
-using PurpleFlowerCore;
 using UnityEditor;
 using UnityEngine;
 
@@ -145,5 +142,4 @@ namespace PurpleFlowerCore
         }
     }
 }
-
 #endif
