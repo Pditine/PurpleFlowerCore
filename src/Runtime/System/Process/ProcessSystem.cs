@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using PurpleFlowerCore.Base;
 using PurpleFlowerCore.Pool;
 using UnityEngine;
 
 namespace PurpleFlowerCore
 {
+    [Obsolete("该系统需要后续优化，暂时不要使用")]
     public static class ProcessSystem
     {
         private static readonly Dictionary<string,Process> _processes = new();

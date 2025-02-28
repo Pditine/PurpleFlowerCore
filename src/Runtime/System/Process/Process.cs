@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 namespace PurpleFlowerCore
 {
+    [Obsolete("该系统需要后续优化，暂时不要使用")]
     public class Process: MonoBehaviour
     {
         private List<IProcessNode> _nodes;

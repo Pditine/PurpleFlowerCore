@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using System.IO;
 using LitJson;
-using UnityEngine;
 
 namespace PurpleFlowerCore.Config
 {
-    public abstract class JsonConfigData<T> : ConfigData where T : class
+    public abstract class JsonConfig<T> : ConfigData where T : class
     {
         protected abstract string GetLoadPath();
-        [SerializeField]private Dictionary<string ,T> _data;
+        private Dictionary<string ,T> _data;
         public T this[string key] => GetItem(key);
         public T this[int key] => GetItem(key);
         
