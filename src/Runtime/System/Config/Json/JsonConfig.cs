@@ -25,7 +25,7 @@ namespace PurpleFlowerCore.Config
             return GetItem(key.ToString());
         }
 
-        public void Load()
+        public override void Load()
         {   
             _data = new Dictionary<string, T>();
             var path = GetLoadPath();
