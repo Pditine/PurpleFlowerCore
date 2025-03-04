@@ -1,9 +1,7 @@
 using System;
-using System.Linq;
 using PurpleFlowerCore.Editor.Utility;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace PurpleFlowerCore.Editor.Tool
 {
@@ -23,16 +21,6 @@ namespace PurpleFlowerCore.Editor.Tool
         }
 
         private bool _openConfigPanel;
-        // private UnityEditor.Editor _configPanel;
-        // private UnityEditor.Editor ConfigPanel
-        // {
-        //     get
-        //     {
-        //         if(_configPanel == null)
-        //             _configPanel = UnityEditor.Editor.CreateEditor(Config);
-        //         return _configPanel;
-        //     }
-        // }
 
         private Vector2 _scrollPosition;
         
@@ -87,7 +75,6 @@ namespace PurpleFlowerCore.Editor.Tool
                 _openConfigPanel = EditorGUILayout.Foldout(_openConfigPanel, new GUIContent("配置面板"));
                 if (_openConfigPanel)
                 {
-                    // ConfigPanel.OnInspectorGUI();
                     ConfigPanel();
                 }
                 
@@ -109,6 +96,11 @@ namespace PurpleFlowerCore.Editor.Tool
             if (GUILayout.Button("Add Button"))
             {
                 Config.quickToolButtonData.Add(new QuickToolButtonData());
+            }
+            
+            if (GUILayout.Button("Save"))
+            {
+                SaveConfig();
             }
 
             try
@@ -144,6 +136,12 @@ namespace PurpleFlowerCore.Editor.Tool
                 if (e is not InvalidOperationException)
                     throw;
             }
+        }
+        
+        private void SaveConfig()
+        {
+            EditorUtility.SetDirty(Config);
+            AssetDatabase.SaveAssets();
         }
     }
 }
