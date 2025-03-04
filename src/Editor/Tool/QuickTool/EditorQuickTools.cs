@@ -142,6 +142,7 @@ namespace PurpleFlowerCore.Editor.Tool
         {
             EditorUtility.SetDirty(Config);
             AssetDatabase.SaveAssets();
+            PFCLog.Info("QuickTool", "Config Saved");
         }
     }
 }
