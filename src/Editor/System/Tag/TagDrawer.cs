@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+using PurpleFlowerCore.Tag;
 using UnityEditor;
 using UnityEngine;
 
-namespace GP.GameplayKit
+namespace PurpleFlowerCore.Tag
 {
-    [CustomPropertyDrawer(typeof(GamePlayTagAttribute))]
-    public class GamePlayTagDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(TagAttribute))]
+    public class TagDrawer : PropertyDrawer
     {
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
@@ -13,7 +13,7 @@ namespace GP.GameplayKit
         }
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            string catalogue = ((GamePlayTagAttribute)attribute).Catalogue;
+            string catalogue = ((TagAttribute)attribute).Catalogue;
             //var tags = GetTagsInCatalogue(catalogue);
             if (string.IsNullOrEmpty(catalogue))
             {

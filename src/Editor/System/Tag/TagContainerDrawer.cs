@@ -1,17 +1,18 @@
+using PurpleFlowerCore.Tag;
 using UnityEditor;
 using UnityEngine;
 
-namespace CPL
+namespace PurpleFlowerCore.Tag
 {
-    [CustomPropertyDrawer(typeof(GamePlayTagContainer))]
-    public class GamePlayTagContainerDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(TagContainer))]
+    public class TagContainerDrawer : PropertyDrawer
     {
         private GenericMenu dropDownMenu;
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             
             EditorGUILayout.LabelField(label, EditorStyles.boldLabel);
-            var target = fieldInfo.GetValue(property.serializedObject.targetObject) as GamePlayTagContainer;
+            var target = fieldInfo.GetValue(property.serializedObject.targetObject) as TagContainer;
             //dropDownMenu ??= GetGamePlayTagsMenu(property, target);
             if (target == null)
             {
@@ -44,7 +45,7 @@ namespace CPL
             
             if (GUILayout.Button("Add"))
             {
-                dropDownMenu.DropDown(new Rect(Event.current.mousePosition, Vector2.zero));
+                dropDownMenu.DropDown(new Rect(UnityEngine.Event.current.mousePosition, Vector2.zero));
             }
             property.serializedObject.ApplyModifiedProperties();
             EditorGUILayout.Space(5);

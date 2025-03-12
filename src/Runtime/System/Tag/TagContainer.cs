@@ -1,15 +1,13 @@
-// 用于封装GamePlayTag集合，接口和行为与Lua的GamePlayTagContainer保持一致
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace CPL
+namespace PurpleFlowerCore.Tag
 {
     [Serializable]
-    public class GamePlayTagContainer
+    public class TagContainer
     {
-        // parentTags在PrefabConfig的导出中不会被序列化，但是在编辑器中会存在.prefab里
         [SerializeField]private List<string> gamePlayTags = new();
         public List<string> GamePlayTags => gamePlayTags;
         [SerializeField]private List<string> parentTags = new();
@@ -18,12 +16,12 @@ namespace CPL
         private const string Explicit = "Explicit";
         private const string IncludeParentTags = "IncludeParentTags";
 
-        public GamePlayTagContainer()
+        public TagContainer()
         {
             
         }
         
-        public GamePlayTagContainer(List<string> tags)
+        public TagContainer(List<string> tags)
         {
             foreach (var tag in tags)
             {
@@ -33,9 +31,9 @@ namespace CPL
             FillParentTags();
         }
         
-        public static GamePlayTagContainer CreateFromArray(List<string> gamePlayTags)
+        public static TagContainer CreateFromArray(List<string> gamePlayTags)
         {
-            return new GamePlayTagContainer(gamePlayTags);
+            return new TagContainer(gamePlayTags);
         }
         
         public static bool IsValid(string tag)
@@ -43,7 +41,7 @@ namespace CPL
             return !string.IsNullOrEmpty(tag);
         }
 
-        public GamePlayTagContainer AddTag(string tagToAdd)
+        public TagContainer AddTag(string tagToAdd)
         {
             if(!IsValid(tagToAdd)) return null;
             if (!gamePlayTags.Contains(tagToAdd))
@@ -52,7 +50,7 @@ namespace CPL
             return this;
         }
         
-        public GamePlayTagContainer AddTagFast(string tagToAdd)
+        public TagContainer AddTagFast(string tagToAdd)
         {
             if(!IsValid(tagToAdd)) return null;
             gamePlayTags.Add(tagToAdd);
@@ -60,7 +58,7 @@ namespace CPL
             return this;
         }
 
-        public GamePlayTagContainer RemoveTag(string tagToRemove)
+        public TagContainer RemoveTag(string tagToRemove)
         {
             if(!IsValid(tagToRemove)) return null;
             int count = gamePlayTags.RemoveAll(tag => tag == tagToRemove);
@@ -153,9 +151,9 @@ namespace CPL
                 return GetSingleTagContainer(tagToCheck).DoesTagContainerMatch(this, IncludeParentTags, Explicit, "Any");
         }
 
-        public GamePlayTagContainer GetGamePlayTagParents()
+        public TagContainer GetGamePlayTagParents()
         {
-            var resultContainer = new GamePlayTagContainer();
+            var resultContainer = new TagContainer();
             resultContainer.gamePlayTags = new List<string>(gamePlayTags);
             
             foreach (var tag in parentTags)
@@ -166,9 +164,9 @@ namespace CPL
             return resultContainer;
         }
 
-        public static GamePlayTagContainer GetSingleTagContainer(string tag)
+        public static TagContainer GetSingleTagContainer(string tag)
         {
-            var container = new GamePlayTagContainer();
+            var container = new TagContainer();
             container.AddTag(tag);
             return container;
         }
@@ -188,7 +186,7 @@ namespace CPL
             return result;
         }
 
-        public bool DoesTagContainerMatch(GamePlayTagContainer otherContainer, string tagMatchType, string otherTagMatchType,
+        public bool DoesTagContainerMatch(TagContainer otherContainer, string tagMatchType, string otherTagMatchType,
             string containerMatchType)
         {
             bool result;
