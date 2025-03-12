@@ -8,20 +8,6 @@ Unity游戏开发中，程序框架的使用已经非常广泛，在一段时间
 
 ## 快速开始
 
-使用https://github.com/Pditine/PurpleFlowerCore.git?path=src添加Package
+使用"https://github.com/Pditine/PurpleFlowerCore.git?path=src" 添加Package
 
-## 待办事项
-
-- System依赖汇总
-- 运行时Debug菜单
-    - 指令提示
-    - 异常处理
-    - 每帧Debug的处理
-- 资源系统优化
-- 多语言系统
-- 存档系统添加功能
-- UI框架
-    - 生成UI控件事件
-    - UI动态生成
-- 流程系统优化
-- UItoolkit
+## 使用说明(待完善)
