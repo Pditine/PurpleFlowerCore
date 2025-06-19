@@ -56,21 +56,21 @@ namespace PurpleFlowerCore
                     break;
             }
 #if PFC_DEBUGMENU
-            if(Application.isPlaying)
-            {
-                StackTrace stackTrace = new StackTrace();
-                StackFrame[] stackFrames = stackTrace.GetFrames()?[2..];
-                var logData = new LogData
-                {
-                    Level = level,
-                    Channel = channel,
-                    Content = content.ToString(),
-                    Time = System.DateTime.Now.ToString("HH:mm:ss"),
-                    Color = color,
-                    StackFrames = stackFrames
-                };
-                DebugSystem.Log(logData);
-            }
+            // if(Application.isPlaying)
+            // {
+            //     StackTrace stackTrace = new StackTrace();
+            //     StackFrame[] stackFrames = stackTrace.GetFrames()?[2..];
+            //     var logData = new LogData
+            //     {
+            //         Level = level,
+            //         Channel = channel,
+            //         Content = content.ToString(),
+            //         Time = System.DateTime.Now.ToString("HH:mm:ss"),
+            //         Color = color,
+            //         StackFrames = stackFrames
+            //     };
+            //     DebugSystem.Log(logData);
+            // }
 #endif
         }
         
